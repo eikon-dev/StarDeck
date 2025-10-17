@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>StarDeck - Constellation of Progress</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-$END$
+    <header class="topbar">
+        <h1>StarDeck</h1>
+    </header>
+
+    <main class="layout">
+        <section class="tasks">
+            <h2>Daily Tasks</h2>
+            <form id="taskForm">
+                <input id="taskInput" type="text" aria-label="New daily" placeholder="New daily (e.g., Coding)" required />
+                <button type="submit">Add</button>
+            </form>
+            <ul id="taskList"></ul>
+        </section>
+
+        <section class="sky">
+            <h2>Your Sky</h2>
+            <canvas id="starCanvas" width="600" height="360" aria-label="Star map"></canvas>
+        </section>
+    </main>
+
+<script src="main.js"></script>
 </body>
 </html>

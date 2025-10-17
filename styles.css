@@ -1,0 +1,98 @@
+:root {
+    --bg:#0e0f13;
+    --panel:#171922;
+    --fg:#e8e8f0;
+    --accent:#80cbc4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Inter, Arial, sans-serif;
+}
+
+.topbar {
+    padding: 14px 20px;
+    border-bottom: 1px solid #232433;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+section {
+    background: var(--panel);
+    border: 1px solid #232433;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+h1, h2 {
+    margin: 0 0 12px;
+}
+
+form {
+    display: flex;
+    gap: 8px;
+}
+
+input, button {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #2a2c3b;
+    background: #1a1c27;
+    color: var(--fg);
+}
+
+button {
+    background: #1f2333;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    background: #2a2f45;
+    border-color: #3a3f5c;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: grid;
+    gap: 8px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #2a2c3b;
+    border-radius: 8px;
+}
+
+.task input[type='checkbox'] {
+    transform: scale(1.2);
+    accent-color: var(--accent);
+}
+
+.sky {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+canvas {
+    background: radial-gradient(ellipse at center, #0f111a 0%, #0b0c12 100%);
+    border-radius: 12px;
+}
