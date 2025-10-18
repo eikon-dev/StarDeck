@@ -1,0 +1,4 @@
+stardeck-vanilla/
+.idea/
+**/node_modules/
+**/dist/
