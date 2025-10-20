@@ -1,13 +1,51 @@
+import { useMemo, useState } from "react";
+import TaskForm from "./components/TaskForm.tsx";
+import TaskList from "./components/TaskList.tsx";
+import type { Task, Priority } from "./types/task.ts";
+import './index.css';
+import * as crypto from "node:crypto";
 
+export default function App() {
+    const [tasks, setTasks] = useState<Task[]>([]);
 
-function App() {
+    function addTask(title: string, priority: Priority) {
+        const t: Task = {
+            id: crypto.randomUUID?.() ?? String(Date.now() + Math.random()),
+            title,
+            done: false,
+            createAt: Date.now(),
+            priority,
+        };
+        setTasks(prev => [t, ...prev]);
+    }
 
-  return (
-      <>
-          <h1>StarDeck</h1>
-          <p>Мой первый React + TS проект</p>
-      </>
-  )
+    function toggleTask(id: string) {
+        setTasks(prev => prev.map(t => (t.id === id ? { ...t, done: !t.done} : t)));
+    }
+
+    function removeTask(id: string) {
+        setTasks(prev => prev.filter(t => t.id !== id));
+    }
+
+    const stats = useMemo(() => {
+        const total = tasks.length;
+        const done = tasks.filter(t => t.done).length;
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        return { total, done, pct };
+    }, [tasks]);
+
+    return (
+      <div style={{ maxWidth:720, margin:'40px auto', padding:'0 16px' }}>
+          <header style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:12 }}>
+              <h1>StarDeck</h1>
+              <small style={{ opacity:0.7 }}>{stats.done}/{stats.total} • {stats.pct}%</small>
+          </header>
+
+          <TaskForm onAdd={addTask}/>
+
+          <div style={{ height:12 }}/>
+          <TaskList item={tasks} onToggle={toggleTask} onRemove={removeTask}/>
+      </div>
+    );
 }
 
-export default App
