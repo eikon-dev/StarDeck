@@ -15,7 +15,7 @@ export default function TaskItem({ task, onToggle, onRemove }: Props) {
             onChange={() => onToggle(task.id)}
             aria-label="Отметить как выполненную"
         />
-          <span style={{ flex:1, textDecoration: task.done ? 'line-though' : 'none', opacity: task.done ? 0.6 : 1}}>
+          <span style={{ flex:1, textDecoration: task.done ? 'line-through' : 'none', opacity: task.done ? 0.6 : 1}}>
             {task.title}
           </span>
           <small style={{ opacity: 0.7 }}>{task.priority}</small>

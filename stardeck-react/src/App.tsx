@@ -3,7 +3,6 @@ import TaskForm from "./components/TaskForm.tsx";
 import TaskList from "./components/TaskList.tsx";
 import type { Task, Priority } from "./types/task.ts";
 import './index.css';
-import * as crypto from "node:crypto";
 
 export default function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -13,7 +12,7 @@ export default function App() {
             id: crypto.randomUUID?.() ?? String(Date.now() + Math.random()),
             title,
             done: false,
-            createAt: Date.now(),
+            createdAt: Date.now(),
             priority,
         };
         setTasks(prev => [t, ...prev]);
