@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { Priority } from "../types/task.ts";
-
+//props разобрался
 type Props = {
-    onAdd: (title: string, priority: Priority) => void;
+    onAdd: (title: string, priority: Priority) => void; //и это понимаю
 }
-
+//тоже теперь понимаем учимся
 export default function TaskForm({ onAdd }: Props) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState<Priority>('med')
@@ -17,7 +17,7 @@ export default function TaskForm({ onAdd }: Props) {
         setTitle('');
         setPriority('med');
     }
-
+//обработчики и управляемый компонент значит
     return (
         <form onSubmit={submit} style={{ display: 'grid', gap:8, gridTemplateColumns: '1fr auto auto'}}>
             <input
