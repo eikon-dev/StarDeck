@@ -1,37 +1,48 @@
 import { useState } from "react";
 import type { Priority } from "../types/task.ts";
-//props разобрался
+import * as React from "react";
+
 type Props = {
-    onAdd: (title: string, priority: Priority) => void; //и это понимаю
-}
-//тоже теперь понимаем учимся
+    onAdd: (title: string, priority: Priority) => void;
+};
+
 export default function TaskForm({ onAdd }: Props) {
     const [title, setTitle] = useState('');
-    const [priority, setPriority] = useState<Priority>('med')
+    const [priority, setPriority] = useState<Priority>('med');
 
-    function submit(e: React.FormEvent) {
-        e.preventDefault();
+    function submit(event: React.FormEvent){
+        event.preventDefault();
         const t = title.trim();
-        if (!t) return;
+        if(!t) return;
         onAdd(t, priority);
         setTitle('');
         setPriority('med');
     }
-//обработчики и управляемый компонент значит
+
+    function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setTitle(event.target.value);
+    }
+
+    function handleSelectChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        setPriority(event.target.value as Priority);
+    }
+
     return (
-        <form onSubmit={submit} style={{ display: 'grid', gap:8, gridTemplateColumns: '1fr auto auto'}}>
-            <input
-                placeholder="Новая задача..."
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                aria-label="Название задачи"
-            />
-            <select value={priority} onChange={(e) => setPriority(e.target.value as Priority)} aria-label="Приоритет">
-                <option value="low">Низкий</option>
-                <option value="med">Средний</option>
-                <option value="high">Высокий</option>
-            </select>
-            <button type="submit">Добавить</button>
-        </form>
+      <form onSubmit={ submit } style={{ display: 'grid', gap:8, gridTemplateColumns: '1fr auto auto'}}>
+          <input
+              placeholder={ "Новая задача" }
+              value={ title }
+              onChange={ handleTitleChange }
+              aria-label={ "Название задачи" }
+          />
+          <select value={ priority }
+                  onChange={ handleSelectChange }
+                  aria-label={ "Приоритет" }>
+              <option value={'low'}></option>
+              <option value={'med'}></option>
+              <option value={'high'}></option>
+          </select>
+          <button type="submit">Добавить</button>
+      </form>
     );
 }
