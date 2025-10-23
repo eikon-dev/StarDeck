@@ -28,21 +28,21 @@ export default function TaskForm({ onAdd }: Props) {
     }
 
     return (
-      <form onSubmit={ submit } style={{ display: 'grid', gap:8, gridTemplateColumns: '1fr auto auto'}}>
-          <input
-              placeholder={ "Новая задача" }
-              value={ title }
-              onChange={ handleTitleChange }
-              aria-label={ "Название задачи" }
-          />
-          <select value={ priority }
-                  onChange={ handleSelectChange }
-                  aria-label={ "Приоритет" }>
-              <option value={'low'}></option>
-              <option value={'med'}></option>
-              <option value={'high'}></option>
-          </select>
-          <button type="submit">Добавить</button>
-      </form>
+        <form onSubmit={ submit } style={{ display: 'grid', gap:8, gridTemplateColumns: '1fr auto auto'}}>
+            <input
+                placeholder={ "Новая задача" }
+                value={ title }
+                onChange={ handleTitleChange }
+                aria-label={ "Название задачи" }
+            />
+            <select value={ priority }
+                    onChange={ handleSelectChange }
+                    aria-label={ "Приоритет" }>
+                <option value={'low'}></option>
+                <option value={'med'}></option>
+                <option value={'high'}></option>
+            </select>
+            <button type="submit">Добавить</button>
+        </form>
     );
 }
