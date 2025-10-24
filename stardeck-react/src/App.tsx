@@ -5,6 +5,8 @@ import TaskFilter from "./components/TaskFilter.tsx";
 import type {Task, Priority} from "./types/task.ts";
 import './index.css';
 
+
+//продолжаем разборы
 export default function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Priority | 'all'>('all');
@@ -56,7 +58,10 @@ export default function App() {
 
             <div style={{height: 12}}/>
             <TaskFilter onFilterChange={handleFilterChange}/>
-            <TaskList item={filteredTasks} onToggle={toggleTask} onRemove={removeTask}/>
+            <TaskList
+                item={filteredTasks}
+                onToggle={toggleTask}
+                onRemove={removeTask}/>
         </div>
     );
 }
