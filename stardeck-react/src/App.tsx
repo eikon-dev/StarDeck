@@ -1,9 +1,11 @@
-import {useMemo, useState} from "react";
+import {useState} from "react";
 import TaskForm from "./components/TaskForm.tsx";
 import TaskList from "./components/TaskList.tsx";
 import TaskFilter from "./components/TaskFilter.tsx";
 import type {Task, Priority} from "./types/task.ts";
 import './index.css';
+import {useTaskStats} from "./hooks/useTaskStats.ts";
+import {useTaskFilter} from "./hooks/useTaskFilter.ts";
 
 
 //продолжаем разборы
@@ -34,17 +36,9 @@ export default function App() {
         setTasks(prev => prev.filter(t => t.id !== id));
     }
 
-    const stats = useMemo(() => {
-        const total = tasks.length;
-        const done = tasks.filter(t => t.done).length;
-        const pct = total ? Math.round((done / total) * 100) : 0;
-        return {total, done, pct};
-    }, [tasks]);
+    const stats = useTaskStats(tasks); //My fist hook :) Горжусь
 
-    const filteredTasks = tasks.filter(task => {
-        if (filter === 'all') return true;
-        return task.priority === filter;
-    });
+    const filteredTasks = useTaskFilter(tasks, filter);
 
     return (
         <div style={{maxWidth: 720, margin: '40px auto', padding: '0 16px'}}>
