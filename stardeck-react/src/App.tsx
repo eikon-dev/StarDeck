@@ -8,7 +8,8 @@ import {useTaskStats} from "./hooks/useTaskStats.ts";
 import {useTaskFilter} from "./hooks/useTaskFilter.ts";
 
 
-//продолжаем разборы
+//debounce для localStorage нужно попробовать
+//так же попробовать debounce для инпутов
 export default function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Priority | 'all'>('all');
@@ -39,7 +40,7 @@ export default function App() {
     const stats = useTaskStats(tasks); //My fist hook :) Горжусь
 
     const filteredTasks = useTaskFilter(tasks, filter);
-
+    // вынести стили отдельно
     return (
         <div style={{maxWidth: 720, margin: '40px auto', padding: '0 16px'}}>
             <header
