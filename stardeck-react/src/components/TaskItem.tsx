@@ -1,4 +1,5 @@
 import type {Task} from "../types/task.ts";
+import {PRIORITY_LABEL} from "../constants/priorityLabel.ts";
 
 type Props = {
     task: Task;
@@ -34,8 +35,8 @@ export default function TaskItem({task, onToggle, onRemove}: Props) {
             <span style={{flex: 1, textDecoration: task.done ? 'line-through' : 'none', opacity: task.done ? 0.6 : 1}}>
             {task.title}
           </span>
-            <small style={{opacity: 0.7}}>{task.priority}</small>
-            <button onClick={handleDelete}>Удалить</button>
+            <small style={{opacity: 0.7}}>{PRIORITY_LABEL[task.priority]}</small>
+            <button onClick={handleDelete} aria-label="Удалить Задачу">Удалить</button>
         </li>
     );
 }
