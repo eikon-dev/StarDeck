@@ -1,0 +1,64 @@
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: var(--space-md);
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid rgba(0,0,0,.15);
+    list-style: none;
+    margin-bottom: 8px; /* воздух между задачами */
+}
+
+.title {
+    margin: 0;
+    font-size: 1rem;
+    flex: 1;                 /* растягиваем заголовок */
+}
+
+.title_done {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* бейдж приоритета */
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    margin-left: 8px;        /* отступ от названия задачи */
+}
+
+/* цвета приоритетов */
+.tag_high   { background: var(--color-danger); }
+.tag_med { background: var(--color-warning); }
+.tag_low    { background: var(--color-primary); }
+
+/* кнопка удаления */
+.deleteBtn {
+    margin-left: 8px;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: var(--radius-md, 8px);
+    background: transparent;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background .15s ease, filter .15s ease;
+    color: inherit;
+}
+
+.deleteBtn:hover {
+    background: var(--color-danger);
+    color: #fff;
+    filter: none;
+}
+
+/* мелкая правка для выравнивания чекбокса */
+input[type="checkbox"] {
+    vertical-align: middle;
+}
