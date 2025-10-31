@@ -1,0 +1,54 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;      /* чтобы на узких экранах переносилось */
+    margin: 24px 0 12px;  /* общий отступ панели */
+}
+
+/* пусть форма занимает всё доступное место, а фильтр — компактный */
+.formWrap {
+    flex: 1 1 480px;      /* тянется но имеет разумный минимум */
+    min-width: 320px;
+}
+
+.container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.header {
+    display: grid;
+    gap: 12px;            /* расстояние между titleRow и toolbarRow */
+    margin-bottom: 12px;
+}
+
+/* Верхняя строка: заголовок слева, статистика справа */
+.titleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.title {
+    margin: 0;
+}
+
+.stats {
+    opacity: 0.7;
+}
+
+/* Нижняя строка: форма + фильтр в одну линию; на узких – перенос */
+.toolbarRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Пусть форма тянется, а фильтр компактен */
+.toolbarRow > :first-child {
+    flex: 1 1 520px;      /* TaskForm */
+    min-width: 320px;
+}
