@@ -1,0 +1,70 @@
+:root{
+    /* скорость/амплитуда */
+    --iris-speed: 22s;               /* было 48s */
+    --iris-drift-x: -2.2%;           /* было -1.2% */
+    --iris-drift-y:  .9%;            /* было  .6% */
+    --iris-drift-scale: 1.02;        /* чуть меньше качели, но быстрее */
+
+    /* цвет и контраст */
+    --iris-opacity: .98;             /* было .95 */
+    --iris-sat: 130%;                /* было 118% */
+    --iris-blur: 16px;               /* было 18px: резче = ярче */
+
+    /* виньетка помягче, чтобы не душить цвета */
+    --iris-vignette:
+            radial-gradient(120% 90% at 50% 0%,   transparent 0 62%, rgba(0,0,0,.10) 100%),
+            radial-gradient(120% 90% at 50% 100%, transparent 0 62%, rgba(0,0,0,.12) 100%),
+            radial-gradient( 90% 120% at 0% 50%,  transparent 0 58%, rgba(0,0,0,.10) 100%),
+            radial-gradient(120% 120% at 100% 50%,transparent 0 58%, rgba(0,0,0,.10) 100%);
+
+    /* больше «хромы» из твоей палитры */
+    --iris-core:
+        /* тёмная глубина как база */
+            radial-gradient(200% 200% at 60% 35%, #0b2a38 0 28%, #071d27 29% 52%, transparent 53%),
+                /* синие лучи */
+            radial-gradient(140% 140% at 52% 45%, color-mix(in oklab,#0261E3 75%,#0d223d) 0 20%, #0d223d 21% 42%, transparent 43%),
+                /* бирюза */
+            radial-gradient(160% 160% at 65% 60%, color-mix(in oklab,#A1DAE4 75%,#0d3b40) 0 18%, #0d3b40 19% 40%, transparent 41%),
+                /* маджента */
+            radial-gradient(130% 130% at 72% 58%, color-mix(in oklab,#EE84C5 78%,#3a1433) 0 17%, #3a1433 18% 38%, transparent 39%),
+                /* лиловый «ореол» */
+            radial-gradient(120% 120% at 35% 78%, rgba(175,175,245,.22), transparent 68%),
+                /* мягкие блюмы */
+            radial-gradient(110% 110% at 18% 12%, rgba(2,97,227,.22), transparent 62%),
+            radial-gradient(110% 110% at 84% 86%, rgba(238,132,197,.20), transparent 66%),
+            radial-gradient(100% 100% at 30% 75%, rgba(161,218,228,.18), transparent 70%),
+            #0e2025;
+}
+
+
+.bg-iris{
+    position:fixed; inset:0; z-index:-1;
+    background: var(--iris-core);
+    opacity: var(--iris-opacity);
+    pointer-events:none;
+}
+.bg-iris::before{
+    content:""; position:absolute; inset:-6%;
+    background: var(--iris-core);
+    filter: saturate(var(--iris-sat)) blur(var(--iris-blur));
+    opacity:.9;
+    animation: irisDrift var(--iris-speed) ease-in-out infinite alternate;
+    will-change: transform, filter;
+}
+.bg-iris::after{
+    content:""; position:absolute; inset:0;
+    background: var(--iris-vignette);
+    pointer-events:none;
+}
+@keyframes irisDrift{
+    0%   { transform: translate3d(0,0,0) scale(1);
+        filter: saturate(var(--iris-sat)) blur(var(--iris-blur)) hue-rotate(0deg); }
+    50%  { transform: translate3d(var(--iris-drift-x), var(--iris-drift-y), 0)
+    scale(var(--iris-drift-scale));
+        filter: saturate(calc(var(--iris-sat) + 8%)) blur(var(--iris-blur)) hue-rotate(18deg); }
+    100% { transform: translate3d(0,0,0) scale(1);
+        filter: saturate(var(--iris-sat)) blur(var(--iris-blur)) hue-rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce){
+    .bg-iris::before{ animation:none; }
+}
