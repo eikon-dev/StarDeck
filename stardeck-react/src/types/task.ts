@@ -1,5 +1,5 @@
 export type Priority = 'low' | 'med' | 'high';
-export type Kind = 'daily' | 'long';
+export type TaskCycle = 'daily' | 'long';
 
 export type Task = {
   id: string;
@@ -7,6 +7,6 @@ export type Task = {
   done: boolean;
   createdAt: number;
   priority: Priority;
-  kind: Kind;
+  cycle: TaskCycle;
   completions?: number[];
 };
