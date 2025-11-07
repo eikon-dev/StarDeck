@@ -1,13 +1,10 @@
-import type {Priority} from "./task.ts";
-
 export type RewardKind = 'daily-all' | 'long-complete';
 
 export type StarReward = {
     id: string;
-    createAt: number;
-    dayKey: string;
+    createdAt: number;
+    dayKey?: number;
     kind: RewardKind;
     amount: number;
     taskId?: string;
-    priorityArAward?: Priority;
 };
