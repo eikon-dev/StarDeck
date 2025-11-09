@@ -1,15 +1,15 @@
 import React, {useState} from "react"; //добавил React чтоб IDE не жаловалась
-import type {TaskCycle, Priority, Description} from "../types/task.ts";
+import type {TaskCycle, Priority} from "../types/task.ts";
 import s from "./TaskForm.module.css";
+import useTasksStore from "../store/useTasksStore.ts";
 
-type Props = {
-    onAdd: (title: string, description: Description, priority: Priority, kind: TaskCycle) => void;
-    dailyCount?: number;
-};
 
 //определись со скобками ""/''
 
-export default function TaskForm({onAdd}: Props) {
+export default function TaskForm() {
+
+    const addTask = useTasksStore(s => s.addTask);
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<Priority>('med');
@@ -17,15 +17,29 @@ export default function TaskForm({onAdd}: Props) {
 
     function submit(event: React.FormEvent) {
         event.preventDefault();
+
         const t = title.trim();
-        const d = description.trim() || null;
+        const d = description.trim();
+
         if (!t) return;
-        onAdd(t, d, priority, kind);
+
+        const newTaskInput = {
+            title: t,
+            description: d,
+            priority: priority,
+            cycle: kind,
+        }
+
+        addTask(newTaskInput);
+
+        const test = useTasksStore.getState().tasks
+        console.log(test)
+
+
         setTitle('');
         setDescription('');
         setPriority('med');
         setKind('daily');
-        console.log(d);
     }
 
     function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -43,7 +57,6 @@ export default function TaskForm({onAdd}: Props) {
     function handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
         setDescription(event.target.value);
     }
-    //Нужны ли приоритеты для daily? скорее да чем нет
     //вынести стили, стили нужно централизовывать для удобства и масштабируемости
     return (
         <div className={s.toolbar}>
