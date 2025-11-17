@@ -8,27 +8,17 @@ interface DailyStats {
     dayKey: string;
 }
 
-const selectorDailyStats = (tasks: Task[]): DailyStats => {
+export default function selectorDailyStats(tasks: Task[]): DailyStats {
     const dailyTasks = tasks.filter(t => t.cycle === 'daily');
     const totalDaily = dailyTasks.length;
     const doneDaily = dailyTasks.filter(t => t.done).length;
-    const dayKey = getDayKey()
+    const dayKey = getDayKey();
+    const shouldRewardDaily = totalDaily > 0 && doneDaily === totalDaily;
 
-    if (doneDaily === totalDaily && totalDaily > 0) {
-        return {
-            totalDaily,
-            doneDaily,
-            shouldRewardDaily: true,
-            dayKey: dayKey,
-        }
-    } else {
-        return {
-            totalDaily,
-            doneDaily,
-            shouldRewardDaily: false,
-            dayKey: dayKey,
-        }
+    return {
+        totalDaily,
+        doneDaily,
+        shouldRewardDaily,
+        dayKey,
     }
 }
-
-export default selectorDailyStats;
