@@ -1,8 +1,9 @@
 import React, {useState} from "react"; //добавил React чтоб IDE не жаловалась
 import type {TaskCycle, Priority} from "../types/task.ts";
-import s from "./TaskForm.module.css";
 import useTasksStore from "../store/useTasksStore.ts";
-
+import {Input} from "@/components/ui/input.tsx";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 //определись со скобками ""/''
 
@@ -32,10 +33,6 @@ export default function TaskForm() {
 
         addTask(newTaskInput);
 
-        const test = useTasksStore.getState().tasks
-        console.log(test)
-
-
         setTitle('');
         setDescription('');
         setPriority('med');
@@ -46,11 +43,11 @@ export default function TaskForm() {
         setTitle(event.target.value);
     }
 
-    function handlePriorityChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    function handlePriorityChange() {
         setPriority(event.target.value as Priority);
     }
 
-    function handleSelectKindChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    function handleSelectKindChange() {
         setKind(event.target.value as TaskCycle);
     }
 
@@ -59,34 +56,48 @@ export default function TaskForm() {
     }
     //вынести стили, стили нужно централизовывать для удобства и масштабируемости
     return (
-        <div className={s.toolbar}>
-            <form onSubmit={submit} style={{display: 'grid', gap: 8, gridTemplateColumns: '1fr auto auto auto'}}>
-                <input
+        <div>
+            <form onSubmit={submit} className="flex gap-3 items-center ">
+                <Input
+                    className="w-64 font-label"
                     placeholder='Новая задача'
                     value={title}
                     onChange={handleTitleChange}
                     aria-label='Название задачи'
                 />
-                <input
+                <Input
+                    className="w-64 font-label"
                     placeholder='Описание (необязательно)'
                     value={description}
                     onChange={handleDescriptionChange}
                     aria-label='Описание задачи'
                 />
-                <select value={priority}
-                        onChange={handlePriorityChange}
-                        aria-label='Приоритет'>
-                    <option value='low'>Низкий</option>
-                    <option value='med'>Средний</option>
-                    <option value='high'>Высокий</option>
-                </select>
-                <select value={kind}
-                        onChange={handleSelectKindChange}
-                        aria-label='Тип задачи'>
-                    <option value='daily'>Ежедневная</option>
-                    <option value='long'>Долговременная</option>
-                </select>
-                <button type='submit' disabled={!title.trim()}>Добавить</button>
+                <Select value={priority}
+                        onValueChange={handlePriorityChange}>
+                    <SelectTrigger className='font-label'>
+                        <SelectValue placeholder='Приоритет'/>
+                    </SelectTrigger>
+                    <SelectContent className='font-label'>
+                        <SelectGroup>
+                            <SelectItem value='low'>Низкий</SelectItem>
+                            <SelectItem value='med'>Средний</SelectItem>
+                            <SelectItem value='high'>Высокий</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+                <Select value={kind}
+                        onValueChange={handleSelectKindChange}>
+                    <SelectTrigger className='font-label'>
+                        <SelectValue placeholder='Тип задачи'/>
+                    </SelectTrigger>
+                    <SelectContent className='font-label'>
+                        <SelectGroup>
+                            <SelectItem value='daily'>Ежедневная</SelectItem>
+                            <SelectItem value='long'>Долговременная</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+                <Button className='font-label' type='submit' disabled={!title.trim()}>Добавить</Button>
             </form>
         </div>
 
