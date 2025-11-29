@@ -8,16 +8,16 @@ export default function useDailyRewardEngine() {
     const {addReward, hasDailyReward} = useStarsStore.getState()
 
     useEffect(() => {
-        const dailyStats = selectorDailyStats(tasks);
-        if (dailyStats.shouldRewardDaily) {
-            if (!hasDailyReward(dailyStats.dayKey)) {
-                addReward({
-                    amount: 1,
-                    dayKey: dailyStats.dayKey,
-                    kind: 'daily-all',
-                })
-            }
-        }
+        const {shouldRewardDaily, dayKey} = selectorDailyStats(tasks);
 
+        //guard clauses
+        if (!shouldRewardDaily) return;
+        if (hasDailyReward(dayKey)) return;
+
+        addReward({
+            amount: 1,
+            dayKey,
+            kind: 'daily-all',
+        })
     }, [tasks])
 }
