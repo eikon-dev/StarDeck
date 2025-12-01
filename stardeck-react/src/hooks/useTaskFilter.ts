@@ -1,12 +1,9 @@
+import selectorTasksFilter from "../selectors/selectorTasksFilter.ts";
+import useTasksStore from "../store/useTasksStore.ts";
 import type {Priority, Task} from "../types/task.ts";
-import {useMemo} from "react";
 
+export function useTaskFilter(filter: Priority | 'all') {
+    const tasks: Task[] = useTasksStore(s => s.tasks);
 
-export function useTaskFilter(tasks: Task[], filter: Priority | 'all'): Task[] {
-    return useMemo(() => {
-        return tasks.filter(task => {
-            if (filter === 'all') return true;
-            return task.priority === filter;
-        });
-    }, [tasks, filter]);
+    return selectorTasksFilter(tasks, filter);
 }
