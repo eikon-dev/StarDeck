@@ -1,5 +1,6 @@
 import {create} from 'zustand';
 import type {Description, Priority, Task, TaskCycle} from "../types/task.ts";
+import useEventStore from "./useEventStore.ts";
 
 interface TaskStore {
     tasks: Task[],
@@ -28,7 +29,7 @@ type NewTaskInput = {
 //     checkDailyCompletion: () => void
 // }
 
-const useTasksStore = create<TaskStore>((set,) => ({
+const useTasksStore = create<TaskStore>((set, get) => ({
 
     tasks: [],
 
@@ -56,9 +57,27 @@ const useTasksStore = create<TaskStore>((set,) => ({
     },
 
     toggleTask: (id: string) => {
+        const task = get().tasks.find(t => t.id === id);
+        if (!task) return; // чтоб TS не ругался TaskItem всегда передает task.id
+
+        const { done: prevDone, cycle } = task; //де структуризация лаконично и красиво
+
         set(s => ({
             tasks: s.tasks.map(t => (t.id === id ? {...t, done: !t.done} : t))
         }))
+
+        // if (prevDone === undefined) return;
+        // ненужен потому что TaskItem Всегда передает id задачи
+        //     function handleToggle() {
+        //         onToggle(task.id)
+        //     }
+
+        const nextDone = !prevDone;
+
+        if (nextDone !== prevDone) {
+            useEventStore.getState().emitTaskToggled(id, nextDone, cycle)
+        }
+
     },
 
     resetDailyCycle: () => {
@@ -67,4 +86,4 @@ const useTasksStore = create<TaskStore>((set,) => ({
 
 }))
 
-export default useTasksStore
+export default useTasksStore;
