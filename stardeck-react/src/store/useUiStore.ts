@@ -4,7 +4,8 @@ interface UiStore {
     isOpenPanel: boolean;
     isTaskFormOpen: boolean;
     togglePanel: () => void;
-    toggleTaskForm: () => void;
+    openModal: () => void;
+    closeModal: () => void;
 }
 
 const useUiStore = create<UiStore>((set) => ({
@@ -17,9 +18,15 @@ const useUiStore = create<UiStore>((set) => ({
         }))
     },
 
-    toggleTaskForm: () => {
-        set(s => ({
-            isTaskFormOpen: !s.isTaskFormOpen
+    openModal: () => {
+        set( () => ({
+            isTaskFormOpen: true
+        }))
+    },
+
+    closeModal: () => {
+        set ( () => ({
+            isTaskFormOpen: false
         }))
     },
 }))
