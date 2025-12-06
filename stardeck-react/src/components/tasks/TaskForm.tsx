@@ -1,5 +1,5 @@
 import {z} from "zod";
-import useTasksStore from "../../../store/useTasksStore.ts";
+import useTasksStore from "../../store/useTasksStore.ts";
 import {Input} from "@/components/ui/input.tsx";
 import {
     Select,
