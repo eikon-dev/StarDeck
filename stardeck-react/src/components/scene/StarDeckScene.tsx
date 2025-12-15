@@ -10,13 +10,7 @@ export default function StarDeckScene() {
             <div className="fixed inset-0">
                 <Canvas>
                     {/*<StarField/>*/}
-                    <StarShader
-                        size={10.8}
-                        color="#38bdf8"
-                        intensity={1}
-                        radius={0.2}
-                        softness={0.1}
-                    />
+                    <StarShader/>
                 </Canvas>
             </div>
             <div className="relative min-h-screen overflow-hidden text-white">
