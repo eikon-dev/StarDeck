@@ -51,12 +51,12 @@ void main() {
 
     float core = 1.0 - smoothstep(t - aa, t + aa, d);
 
-    float m = max(abs(st.x), abs(st.y));
-    float L = 0.7;
-    float clip = 1.0 - smoothstep(L, L + aa, m);
+//    float m = max(abs(st.x), abs(st.y));
+//    float L = 0.7;
+//    float clip = 1.0 - smoothstep(L, L + aa, m);
 
-    float outv = core * clip;
-    gl_FragColor = vec4(vec3(outv), outv);
+//    float outv = core * clip;
+    gl_FragColor = vec4(vec3(core), core);
 
 //    float p         = 0.25;
 //    float manhattan = pow(abs(st.x), p) + pow(abs(st.y), p);
