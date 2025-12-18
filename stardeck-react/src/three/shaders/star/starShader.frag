@@ -40,23 +40,22 @@ void main() {
 
     float PI = 3.1415926535;
 
-    float d = (pow(abs(st.x), 0.3) + pow(abs(st.y), 0.3)) * 0.4;
-
-//    float star = smoothstep(0.1, 0.2, d) ;
+    float d = (pow(abs(st.x), 0.6) + pow(abs(st.y), 0.6)) * 0.7;
 
 //    vec3 color = vec3(1.0, 1.0, 1.0);
     float t = 0.3;
-    float px = 1.0 / uResolution.y;
-    float aa = max(fwidth(d), px) * 2.0;
-
-    float core = 1.0 - smoothstep(t - aa, t + aa, d);
+//    float px = 1.0 / uResolution.y;
+//    float aa = max(fwidth(d), px) * 2.0;
+//
+//    float core = 1.0 - smoothstep(t - aa, t + aa, d);
 
 //    float m = max(abs(st.x), abs(st.y));
 //    float L = 0.7;
 //    float clip = 1.0 - smoothstep(L, L + aa, m);
 
+    float star = 1.0 - smoothstep(t - 0.2, t + 0.1 , d) ;
 //    float outv = core * clip;
-    gl_FragColor = vec4(vec3(core), core);
+    gl_FragColor = vec4(vec3(1.0), star);
 
 //    float p         = 0.25;
 //    float manhattan = pow(abs(st.x), p) + pow(abs(st.y), p);
