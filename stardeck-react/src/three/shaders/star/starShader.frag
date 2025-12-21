@@ -37,25 +37,39 @@ float noise(vec2 p) {
 
 void main() {
     vec2 st = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
+    vec2 p = vUv * 2.0 - 1.0;
 
     float PI = 3.1415926535;
 
-    float d = (pow(abs(st.x), 0.6) + pow(abs(st.y), 0.6)) * 0.7;
+    float d  = (pow(abs(st.x), 0.3) + pow(abs(st.y), 0.3)) * 1.5;
 
-//    vec3 color = vec3(1.0, 1.0, 1.0);
+    float r  = length(p);
+    float R  = 0.95;
+    float aa = fwidth(r);
+    float clip = 1.0 - smoothstep(R, R + aa, r);
+
     float t = 0.3;
-//    float px = 1.0 / uResolution.y;
-//    float aa = max(fwidth(d), px) * 2.0;
-//
-//    float core = 1.0 - smoothstep(t - aa, t + aa, d);
 
-//    float m = max(abs(st.x), abs(st.y));
-//    float L = 0.7;
-//    float clip = 1.0 - smoothstep(L, L + aa, m);
 
-    float star = 1.0 - smoothstep(t - 0.2, t + 0.1 , d) ;
-//    float outv = core * clip;
-    gl_FragColor = vec4(vec3(1.0), star);
+    vec3  base  = vec3(0.58, 0.34, 1.0);
+    vec2 warp   = vec2(
+        noise(st * 2.0 + vec2(10.0, 0.0) + uTime * 0.05),
+        noise(st * 2.0 + vec2(0.0, 10.0) - uTime * 0.05)
+    );
+    vec2  time     = vec2(uTime * 0.12, -uTime * 0.09);
+    float n     = noise(st * 1.6 + warp * 0.6 + time);
+    vec3  holo  = iridescent(n * 2.0);
+    float band  = smoothstep(0.2, 0.8, n);
+
+    float star = 1.0 - smoothstep(1.0 - 0.06, 1.0 + 0.06, d);
+    star *= clip;
+
+    vec3 fill = (base + holo * band * 0.55) * star;
+
+    gl_FragColor = vec4(fill, star);
+
+}
+
 
 //    float p         = 0.25;
 //    float manhattan = pow(abs(st.x), p) + pow(abs(st.y), p);
@@ -68,20 +82,5 @@ void main() {
 //    float outer = 1.3;
 //
 //    float star  = 1.0 - smoothstep(inner, outer, d);
-//    vec3  base  = vec3(0.58, 0.34, 1.0);
-//
-//    vec2  t     = vec2(uTime * 0.12, -uTime * 0.09);
-//    vec2 warp   = vec2(
-//        noise(st * 2.0 + vec2(10.0, 0.0) + uTime * 0.05),
-//        noise(st * 2.0 + vec2(0.0, 10.0) - uTime * 0.05)
-//    );
-//
-//    float n     = noise(st * 1.6 + warp * 0.6 + t);
-//    vec3  holo  = iridescent(n * 2.0);
-//    float band  = smoothstep(0.2, 0.8, n);
-//
-//    vec3 fill = (base + holo * band * 0.55) * star;
-//
-//
+
 //    gl_FragColor = vec4(fill, star);
-}
