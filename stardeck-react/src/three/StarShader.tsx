@@ -7,11 +7,14 @@ import {fragmentShader, vertexShader} from "@/three/shaders/testedShader.ts";
 
 export function StarShader() {
     const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+    const materialMesh = useRef<THREE.Mesh | null>(null);
 
     // Обновляем время каждый кадр
     useFrame((state) => {
         const mat = materialRef.current;
+        const matMesh = materialMesh.current;
         if (!mat) return;
+        if (!matMesh) return;
 
         const dpr = state.gl.getPixelRatio();
 
@@ -25,6 +28,10 @@ export function StarShader() {
 
         // ВАЖНО: aspect в пикселях, а не viewport
         mat.uniforms.uAspect.value = state.size.width / state.size.height;
+
+
+        matMesh.position.setY(2);
+
     });
 
     const uniforms = useMemo(() => ({
@@ -34,7 +41,7 @@ export function StarShader() {
     }), [])
 
     return (
-        <mesh>
+        <mesh ref={materialMesh}>
             {/* Плоскость, на которую вешаем шейдер */}
             <planeGeometry args={[2, 2]} />
             <shaderMaterial
