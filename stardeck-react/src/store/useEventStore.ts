@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {TaskCycle} from "../types/task.ts";
+import type {TaskCycle} from "@/types/task";
 
 interface EventStore {
     events: TaskEvent[],
