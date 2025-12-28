@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {StarReward} from "../types/rewards.ts";
+import type {StarReward} from "@/types/rewards";
 
 interface StarsStore {
     stars: StarReward[],
