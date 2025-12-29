@@ -1,7 +1,7 @@
 // src/components/StarShader.tsx
 
 import {useMemo, useRef} from "react";
-import { useFrame } from "@react-three/fiber";
+import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 import {fragmentShader, vertexShader} from "@/three/shaders/testedShader.ts";
 import {Mesh} from "three";
@@ -9,10 +9,40 @@ import {Mesh} from "three";
 export default function StarShader() {
     const materialRef = useRef<THREE.ShaderMaterial | null>(null);
     const materialMesh = useRef<THREE.Mesh | null>(null);
-    const animationParameter = useRef({
+
+    type Phases = 'idle' | 'enter' | 'hold' | 'exit';
+
+    interface CTX {
+        phase: Phases,
+        t: number,
+        posY: number,
+    }
+
+    const ctx = useRef<CTX>({
+        phase: 'idle',
+        t: 0,
         posY: -5,
-        speed: 10,
-    });
+    })
+
+    function stepIdle(mesh, ctx) {
+        if (ctx.phase !== 'idle') return;
+
+        ctx.t = 0;
+        ctx.posY = -5;
+        mesh.position.setY(ctx.posY);
+        ctx.phase = 'enter';
+
+    }
+
+    function stepEnter(mesh: Mesh, ctx, dt) {
+        if (ctx.phase !== 'enter') return;
+        ctx.t += dt;
+        mesh.position.y += 10 * dt;
+
+        if (ctx.t >= 0.5) {
+            ctx.phase = 'hold';
+        }
+    }
 
     // Обновляем время каждый кадр
     useFrame((state, delta) => {
@@ -35,29 +65,24 @@ export default function StarShader() {
         // ВАЖНО: aspect в пикселях, а не viewport
         mat.uniforms.uAspect.value = state.size.width / state.size.height;
 
-        animationMesh(matMesh, delta);
+        stepIdle(matMesh, ctx.current);
+        stepEnter(matMesh, ctx.current, delta);
+
     });
 
 
-
-    function animationMesh(mesh: Mesh, delta: number) {
-        if (mesh.position.y >= 0) return;
-        mesh.position.y += delta * animationParameter.current.speed;
-    }
-
     const uniforms = useMemo(() => ({
-        uTime: { value: 0},
-        uResolution: { value: new THREE.Vector2(1, 1) },
-        uAspect: {value: 1 },
+        uTime: {value: 0},
+        uResolution: {value: new THREE.Vector2(1, 1)},
+        uAspect: {value: 1},
     }), [])
 
     return (
         <mesh
             ref={materialMesh}
-            position={[0, -5, 0]}
         >
             {/* Плоскость, на которую вешаем шейдер */}
-            <planeGeometry args={[2, 2]} />
+            <planeGeometry args={[2, 2]}/>
             <shaderMaterial
                 ref={materialRef}
                 vertexShader={vertexShader}
@@ -68,3 +93,31 @@ export default function StarShader() {
         </mesh>
     );
 }
+
+
+// const PHASE: Record<Phases> = {
+//     init: Phases,
+//     enter: 'enter',
+//     hold: 'hold',
+//     exit: 'exit',
+// }
+
+// const currentPhase = useRef(PHASE.init);
+// const animParameters = useRef({
+//     speed: 10,
+//     startPos: -5,
+// });
+// function animationMesh(mesh: Mesh, delta: number) {
+//     if (currentPhase.current === 'init') {
+//         const starPos = animParameters.current.startPos;
+//         mesh.position.setY(starPos);
+//         currentPhase.current = 'enter';
+//     }
+//     if (currentPhase.current === 'enter') {
+//         const speed = animParameters.current.speed;
+//         mesh.position.y += speed * delta;
+//         if (mesh.position.y >= 0) {
+//             currentPhase.current = 'hold';
+//         }
+//     }
+// }
