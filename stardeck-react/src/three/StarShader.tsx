@@ -16,15 +16,17 @@ export default function StarShader() {
         phase: Phases,
         t: number,
         posY: number,
+        speed: number,
     }
 
     const ctx = useRef<CTX>({
         phase: 'idle',
         t: 0,
         posY: -5,
+        speed: 10,
     })
 
-    function stepIdle(mesh, ctx) {
+    function stepIdle(mesh: Mesh, ctx: CTX) {
         if (ctx.phase !== 'idle') return;
 
         ctx.t = 0;
@@ -34,13 +36,33 @@ export default function StarShader() {
 
     }
 
-    function stepEnter(mesh: Mesh, ctx, dt) {
+    function stepEnter(mesh: Mesh, ctx: CTX, dt: number) {
         if (ctx.phase !== 'enter') return;
         ctx.t += dt;
-        mesh.position.y += 10 * dt;
+        ctx.posY += ctx.speed * dt;
+        mesh.position.y = ctx.posY;
 
         if (ctx.t >= 0.5) {
             ctx.phase = 'hold';
+        }
+    }
+
+    function stepHold(ctx: CTX, dt: number) {
+        if (ctx.phase !== 'hold') return;
+        ctx.t += dt;
+        if (ctx.t >= 1.5) {
+            ctx.phase = 'exit';
+        }
+    }
+
+    function stepExit(mesh: Mesh, ctx: CTX, dt: number) {
+        if (ctx.phase !== 'exit') return;
+        ctx.t += dt;
+        ctx.posY += ctx.speed * dt;
+        mesh.position.y = ctx.posY;
+
+        if (ctx.t >= 2.5) {
+            ctx.phase = 'idle';
         }
     }
 
@@ -67,6 +89,8 @@ export default function StarShader() {
 
         stepIdle(matMesh, ctx.current);
         stepEnter(matMesh, ctx.current, delta);
+        stepHold(ctx.current, delta);
+        stepExit(matMesh, ctx.current, delta);
 
     });
 
