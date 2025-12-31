@@ -17,8 +17,6 @@ type TaskEvent = {
 const useEventStore = create<EventStore>((set) => ({
     events: [],
 
-
-
     emitTaskToggled: (id, done, cycle) => {
         const taskEvent: TaskEvent = {
             id: id,
