@@ -23,9 +23,11 @@ interface FXStore {
     history: EffectItem[], //История для проигранных эффектов
 
     createEffectItem: (newEffectItem: EffectItem) => void, //записывает в очередь заявку на воспроизведение анимации
+    start: (id: string) => void,
+    finish: (id: string) => void,
 }
 
-const useFXStore = create<FXStore>((set) => ({
+const useFXStore = create<FXStore>((set, get) => ({
     queue: [],
     history: [],
 
@@ -42,7 +44,28 @@ const useFXStore = create<FXStore>((set) => ({
         set((s) => ({
             queue: [...s.queue, effectItem],
         }))
-    }
+    },
+
+    start: (id) => {
+        set((s) => ({
+            queue: s.queue.map((item) => item.id === id ? {...item, status: 'playing'} : item),
+        }));
+    },
+
+    finish: (id) => {
+        set((s) => {
+            const effect = s.queue.find((item) => item.id === id);
+            if (!effect) return s;
+
+            const doneEffect: EffectItem = { ...effect, status: 'done' };
+
+            return {
+                queue: s.queue.filter((item) => item.id !== id),
+                history: [...s.history, doneEffect],
+            };
+        });
+    },
+
 }));
 
 export default useFXStore;
