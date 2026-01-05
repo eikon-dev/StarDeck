@@ -6,6 +6,7 @@ import * as THREE from "three";
 import {fragmentShader, vertexShader} from "@/three/shaders/testedShader.ts";
 import {Mesh} from "three";
 
+
 export default function StarShader() {
     const materialRef = useRef<THREE.ShaderMaterial | null>(null);
     const materialMesh = useRef<THREE.Mesh | null>(null);
@@ -26,19 +27,20 @@ export default function StarShader() {
         speed: 10,
     })
 
+
     function stepIdle(mesh: Mesh, ctx: CTX) {
         if (ctx.phase !== 'idle') return;
-
         ctx.t = 0;
         ctx.posY = -5;
+
         mesh.position.setY(ctx.posY);
         ctx.phase = 'enter';
-
     }
 
     function stepEnter(mesh: Mesh, ctx: CTX, dt: number) {
         if (ctx.phase !== 'enter') return;
         ctx.t += dt;
+
         ctx.posY += ctx.speed * dt;
         mesh.position.y = ctx.posY;
 
@@ -50,14 +52,16 @@ export default function StarShader() {
     function stepHold(ctx: CTX, dt: number) {
         if (ctx.phase !== 'hold') return;
         ctx.t += dt;
+
         if (ctx.t >= 1.5) {
-            ctx.phase = 'exit';
+            // ctx.phase = 'exit';
         }
     }
 
     function stepExit(mesh: Mesh, ctx: CTX, dt: number) {
         if (ctx.phase !== 'exit') return;
         ctx.t += dt;
+
         ctx.posY += ctx.speed * dt;
         mesh.position.y = ctx.posY;
 
@@ -117,31 +121,3 @@ export default function StarShader() {
         </mesh>
     );
 }
-
-
-// const PHASE: Record<Phases> = {
-//     init: Phases,
-//     enter: 'enter',
-//     hold: 'hold',
-//     exit: 'exit',
-// }
-
-// const currentPhase = useRef(PHASE.init);
-// const animParameters = useRef({
-//     speed: 10,
-//     startPos: -5,
-// });
-// function animationMesh(mesh: Mesh, delta: number) {
-//     if (currentPhase.current === 'init') {
-//         const starPos = animParameters.current.startPos;
-//         mesh.position.setY(starPos);
-//         currentPhase.current = 'enter';
-//     }
-//     if (currentPhase.current === 'enter') {
-//         const speed = animParameters.current.speed;
-//         mesh.position.y += speed * delta;
-//         if (mesh.position.y >= 0) {
-//             currentPhase.current = 'hold';
-//         }
-//     }
-// }
