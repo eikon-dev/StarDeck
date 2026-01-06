@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import type {Description, Priority, Task, TaskCycle} from "../types/task.ts";
+import type {Description, Priority, Task, TaskCycle} from "@/types/task";
 import useEventStore from "./useEventStore.ts";
 
 interface TaskStore {
