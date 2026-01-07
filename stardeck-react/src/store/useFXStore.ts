@@ -1,44 +1,26 @@
 import {create} from "zustand";
-
-type FXType = 'star' | 'shake'; //виды анимаций
-type FXStatus = 'queued' | 'playing' | 'done'; //статусы анимации очередь -> проигрывание -> завершено
-
-
-//это заявка на проигрывание анимации для проигрывателя FSM
-type EffectItem = {
-    id: string,
-    type: FXType, //тип эффекта, который должен проиграть FSM
-    status: FXStatus,
-    createdAt: number,
-    payload: {
-        posY: number,
-        posX: number,
-    }
-    //TODO: Добавить Payload: {}, он говорит как показывать анимацию отдает стартовые параметры
-}
-
+import type {EffectItem, FXRequest} from "@/three/fx/fx.type";
 
 interface FXStore {
     queue: EffectItem[], //Сюда записываем очередь для воспроизведения
     history: EffectItem[], //История для проигранных эффектов
 
-    createEffectItem: (newEffectItem: EffectItem) => void, //записывает в очередь заявку на воспроизведение анимации
+    createEffectItem: (request: FXRequest) => void,
+    //записывает в очередь заявку на воспроизведение анимации
     start: (id: string) => void,
     finish: (id: string) => void,
 }
 
-const useFXStore = create<FXStore>((set, get) => ({
+const useFXStore = create<FXStore>((set) => ({
     queue: [],
     history: [],
 
-    createEffectItem: (newEffectItem: EffectItem) => {
-
+    createEffectItem: (request: FXRequest) => {
         const effectItem: EffectItem = {
             id: crypto.randomUUID?.() ?? String(Date.now() + Math.random()),
-            type: newEffectItem.type,
             status: 'queued',
             createdAt: Date.now(),
-            payload: newEffectItem.payload,
+            ...request
         }
 
         set((s) => ({
@@ -57,11 +39,11 @@ const useFXStore = create<FXStore>((set, get) => ({
             const effect = s.queue.find((item) => item.id === id);
             if (!effect) return s;
 
-            const doneEffect: EffectItem = { ...effect, status: 'done' };
+            const doneEffect: EffectItem = {...effect, status: 'done'};
 
             return {
                 queue: s.queue.filter((item) => item.id !== id),
-                history: [...s.history, doneEffect],
+                history: [...s.history, doneEffect].slice(-50), //TODO: Подумать о HISTORY_LIMIT = 50
             };
         });
     },
