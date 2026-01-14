@@ -1,5 +1,6 @@
 
 import type {StarEffect} from "@/three/fx/fx.type";
+import {Mesh} from "three";
 
 type Phases = 'idle' | 'enter' | 'hold' | 'exit';
 
@@ -10,9 +11,10 @@ interface CTX {
     speed: number,
 }
 
-
 class StarPlayer {
     private ctx: CTX;
+    private mesh?: Mesh;
+    private finished: boolean = false;
 
     constructor(payload: StarEffect['payload']) {
         this.ctx = {
@@ -23,24 +25,65 @@ class StarPlayer {
         }
     }
 
+    attach(mesh: Mesh) {
+        this.mesh = mesh;
+    }
 
     update(dt: number) {
+        if(!this.mesh) return false;
 
+        this.stepIdle();
+        this.stepEnter(dt);
+        this.stepHold(dt);
+        this.stepExit(dt);
+
+        return this.finished;
     }
-
+    //TODO: таймер исправить
+    //TODO: проверку mesh исправить
     private stepIdle() {
+        if(this.ctx.phase !== 'idle') return;
 
-    }
-    private stepEnter() {
+        this.ctx.t = 0;
 
-    }
-    private stepHold() {
-
-    }
-    private stepExit() {
-
+        this.mesh.position.y = this.ctx.posY;
+        this.ctx.phase = 'enter';
     }
 
+    private stepEnter(dt: number) {
+        if (this.ctx.phase !== 'enter') return;
+
+        this.ctx.t += dt;
+
+        this.ctx.posY += this.ctx.speed * dt;
+        this.mesh.position.y = this.ctx.posY;
+
+        if (this.ctx.t >= 0.5) {
+            this.ctx.phase = 'hold';
+        }
+    }
+
+    private stepHold(dt: number) {
+        if (this.ctx.phase !== 'hold') return;
+        this.ctx.t += dt;
+
+        if (this.ctx.t >= 1.5) {
+            this.ctx.phase = 'exit';
+        }
+    }
+
+    private stepExit(dt: number) {
+        if (this.ctx.phase !== 'exit') return;
+        this.ctx.t += dt;
+
+        this.ctx.posY += this.ctx.speed * dt;
+        this.mesh.position.y = this.ctx.posY;
+
+        if (this.ctx.t >= 2.5) {
+            this.ctx.phase = 'idle';
+            this.finished = true;
+        }
+    }
 }
 
 
@@ -66,44 +109,3 @@ class StarPlayer {
 // })
 //
 //
-// function stepIdle(mesh: Mesh, ctx: CTX) {
-//     if (ctx.phase !== 'idle') return;
-//     ctx.t = 0;
-//     ctx.posY = -5;
-//
-//     mesh.position.setY(ctx.posY);
-//     ctx.phase = 'enter';
-// }
-//
-// function stepEnter(mesh: Mesh, ctx: CTX, dt: number) {
-//     if (ctx.phase !== 'enter') return;
-//     ctx.t += dt;
-//
-//     ctx.posY += ctx.speed * dt;
-//     mesh.position.y = ctx.posY;
-//
-//     if (ctx.t >= 0.5) {
-//         ctx.phase = 'hold';
-//     }
-// }
-//
-// function stepHold(ctx: CTX, dt: number) {
-//     if (ctx.phase !== 'hold') return;
-//     ctx.t += dt;
-//
-//     if (ctx.t >= 1.5) {
-//         // ctx.phase = 'exit';
-//     }
-// }
-//
-// function stepExit(mesh: Mesh, ctx: CTX, dt: number) {
-//     if (ctx.phase !== 'exit') return;
-//     ctx.t += dt;
-//
-//     ctx.posY += ctx.speed * dt;
-//     mesh.position.y = ctx.posY;
-//
-//     if (ctx.t >= 2.5) {
-//         ctx.phase = 'idle';
-//     }
-// }
