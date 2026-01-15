@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import type {Description, Priority, Task, TaskCycle} from "@/types/task";
+import type {NewTaskInput, Task} from "@/types/task";
 import useEventStore from "./useEventStore.ts";
 
 interface TaskStore {
@@ -10,13 +10,8 @@ interface TaskStore {
     toggleTask: (id: string) => void,
     resetDailyCycle: () => void,
 }
+//TODO: Закрыть технический долг resetDailyCycle()
 
-type NewTaskInput = {
-    title: string,
-    description?: Description,
-    priority: Priority,
-    cycle: TaskCycle,
-}
 // будущее расширение store
 // interface TaskStore {
 //     tasks: Task[]
@@ -79,6 +74,7 @@ const useTasksStore = create<TaskStore>((set, get) => ({
         }
 
     },
+
 
     resetDailyCycle: () => {
 
