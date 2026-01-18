@@ -1,44 +1,69 @@
-import type {EffectItem} from "@/three/fx/fx.type";
+import type {EffectItem, FXPlayer} from "@/three/fx/fx.type";
 import type {FXPort} from "@/three/fx/fx.port";
+import {StarPlayer} from "@/three/fx/players/StarPlayer";
+import type {FXScenePort} from "@/three/fx/FXScene.port";
 
 export class FXRunner {
     private fxPort: FXPort;
-    private currentId: string | null = null;
+    private scenePort: FXScenePort;
 
-    constructor(fxPort: FXPort) {
+    //TODO: Сделать одну сущность для Id и Player
+    private currentId: string | null = null;
+    private currentPlayer: FXPlayer | null = null;
+
+    constructor(fxPort: FXPort, scenePort: FXScenePort) {
         this.fxPort = fxPort;
+        this.scenePort = scenePort;
     }
 
-    tick() {
-        if (this.currentId !== null) return;
+    tick(dt: number) {
+        if (this.currentPlayer) {
+            const done = this.currentPlayer.update(dt);
 
-        const queue: EffectItem[] = this.fxPort.getQueue()
-        const effect: EffectItem | undefined = this.pickNext(queue);
+            if (done) {
+                if (!this.currentId) return;
+                this.fxPort.finish(this.currentId);
+
+                this.currentPlayer = null;
+                this.currentId = null;
+            }
+
+            return;
+        }
+
+        const effect: EffectItem | undefined = this.pickNext(this.fxPort.getQueue());
         if (!effect) return;
 
-        this.currentId = effect.id;
+        const player = this.createPlayer(effect);
+        if(!player) return;
 
-        this.play(effect)
-            .finally(() => {
-                this.onFinish(effect.id)
-            });
+        this.currentId = effect.id;
+        this.fxPort.start(effect.id);
+        this.currentPlayer = player;
     }
 
     private pickNext(queue: EffectItem[]): EffectItem | undefined {
-        if (queue.length === 0) return;
-
         return queue.find(item => item.status === 'queued');
     }
 
-    private play(effect: EffectItem): Promise<void> {
-        this.fxPort.start(effect.id)
+    //TODO: Далее подумать о registry когда эффектов станет больше
+    private createPlayer(effect: EffectItem): FXPlayer | null {
+        switch (effect.type) {
 
-        return Promise.resolve();
-    }
+            case 'star': {
+                //TODO: Сделать player сам решает какие ему нужны ресурсы createPlayer не знает про mesh
+                const mesh = this.scenePort.getStarMesh();
+                const player = new StarPlayer(effect.payload);
 
-    private onFinish(id: string): void {
-        this.fxPort.finish(id);
+                if (!mesh) return null;
+                player.attach(mesh);
 
-        this.currentId = null;
+                return player;
+            }
+            default: {
+                //TODO: Добавить _exhaustive: never = effect
+                return null
+            }
+        }
     }
 }
