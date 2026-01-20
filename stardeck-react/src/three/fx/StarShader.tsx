@@ -1,101 +1,45 @@
 // src/components/StarShader.tsx
 
-import {useMemo, useRef} from "react";
+import {useMemo, useRef, forwardRef} from "react";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 import {fragmentShader, vertexShader} from "@/three/shaders/testedShader.ts";
-import {Mesh} from "three";
 
+type StarShaderProps = {};
 
-export default function StarShader() {
+const StarShader = forwardRef<THREE.Mesh, StarShaderProps>((_, forwardedRef) => {
+
     const materialRef = useRef<THREE.ShaderMaterial | null>(null);
-    const materialMesh = useRef<THREE.Mesh | null>(null);
+    const localMeshRef = useRef<THREE.Mesh | null>(null);
 
-    type Phases = 'idle' | 'enter' | 'hold' | 'exit';
+    const setMeshRef = (node: THREE.Mesh | null) => {
+        localMeshRef.current = node;
 
-    interface CTX {
-        phase: Phases,
-        t: number,
-        posY: number,
-        speed: number,
-    }
+        if(!forwardedRef) return;
 
-    const ctx = useRef<CTX>({
-        phase: 'idle',
-        t: 0,
-        posY: -5,
-        speed: 10,
-    })
-
-
-    function stepIdle(mesh: Mesh, ctx: CTX) {
-        if (ctx.phase !== 'idle') return;
-        ctx.t = 0;
-        ctx.posY = -5;
-
-        mesh.position.setY(ctx.posY);
-        ctx.phase = 'enter';
-    }
-
-    function stepEnter(mesh: Mesh, ctx: CTX, dt: number) {
-        if (ctx.phase !== 'enter') return;
-        ctx.t += dt;
-
-        ctx.posY += ctx.speed * dt;
-        mesh.position.y = ctx.posY;
-
-        if (ctx.t >= 0.5) {
-            ctx.phase = 'hold';
+        if (typeof forwardedRef === "function") {
+            forwardedRef(node);
+        } else {
+            forwardedRef.current = node;
         }
-    }
+    };
 
-    function stepHold(ctx: CTX, dt: number) {
-        if (ctx.phase !== 'hold') return;
-        ctx.t += dt;
-
-        if (ctx.t >= 1.5) {
-            // ctx.phase = 'exit';
-        }
-    }
-
-    function stepExit(mesh: Mesh, ctx: CTX, dt: number) {
-        if (ctx.phase !== 'exit') return;
-        ctx.t += dt;
-
-        ctx.posY += ctx.speed * dt;
-        mesh.position.y = ctx.posY;
-
-        if (ctx.t >= 2.5) {
-            ctx.phase = 'idle';
-        }
-    }
 
     // Обновляем время каждый кадр
-    useFrame((state, delta) => {
+    useFrame((state) => {
         const mat = materialRef.current;
-        const matMesh = materialMesh.current;
-
-        if (!mat) return;
-        if (!matMesh) return;
+        const matMesh = localMeshRef.current;
+        if (!mat || !matMesh) return;
 
         const dpr = state.gl.getPixelRatio();
-
         mat.uniforms.uTime.value = state.clock.elapsedTime;
-
         // ВАЖНО: drawingBuffer pixels
         mat.uniforms.uResolution.value.set(
             state.size.width * dpr,
             state.size.height * dpr
         );
-
         // ВАЖНО: aspect в пикселях, а не viewport
         mat.uniforms.uAspect.value = state.size.width / state.size.height;
-
-        stepIdle(matMesh, ctx.current);
-        stepEnter(matMesh, ctx.current, delta);
-        stepHold(ctx.current, delta);
-        stepExit(matMesh, ctx.current, delta);
-
     });
 
 
@@ -103,11 +47,12 @@ export default function StarShader() {
         uTime: {value: 0},
         uResolution: {value: new THREE.Vector2(1, 1)},
         uAspect: {value: 1},
-    }), [])
+    }), []);
 
     return (
         <mesh
-            ref={materialMesh}
+            ref={setMeshRef}
+            position={[0, -5, 0]}
         >
             {/* Плоскость, на которую вешаем шейдер */}
             <planeGeometry args={[2, 2]}/>
@@ -120,4 +65,6 @@ export default function StarShader() {
             />
         </mesh>
     );
-}
+});
+
+export default StarShader;
