@@ -7,6 +7,7 @@ interface TasksSort {
 }
 
 export default function selectorTasksSort(tasks: Task[]): TasksSort {
+    //TODO: Исправить использование хука в селекторе
     const {daily, long} = useMemo(() => {
         const daily: Task[] = [];
         const long: Task[] = [];

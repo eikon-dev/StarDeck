@@ -12,3 +12,10 @@ export type Task = {
   cycle: TaskCycle;
   completions?: number[];
 };
+
+export type NewTaskInput = {
+    title: string,
+    description?: Description,
+    priority: Priority,
+    cycle: TaskCycle,
+}

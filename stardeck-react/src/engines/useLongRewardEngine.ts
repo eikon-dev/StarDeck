@@ -1,10 +1,12 @@
 import useStarsStore from "../store/useStarsStore.ts";
 import useEventStore from "../store/useEventStore.ts";
 import {useEffect} from "react";
+import useFXStore from "@/store/useFXStore";
+//TODO: Current version v1, wait v2
 
-//TODO: Переходим на EventStore => COMPLETED
 export default function useLongRewardEngine() {
     const {addReward, hasLongReward} = useStarsStore.getState();
+    const {createEffectItem} = useFXStore.getState();
     const lastEvent = useEventStore(s => s.events[s.events.length - 1]); //[s.events.length - 1] последнее событие
 
     useEffect(() => {
@@ -18,6 +20,14 @@ export default function useLongRewardEngine() {
                     amount: 1,
                     taskId: id,
                     kind: "long-complete",
+                })
+
+                createEffectItem({
+                    type: 'star',
+                    payload: {
+                        posX: 0,
+                        posY: -5,
+                    }
                 })
             }
         }
