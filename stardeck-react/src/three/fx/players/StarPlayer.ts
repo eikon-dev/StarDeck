@@ -1,4 +1,4 @@
-import type {StarEffect} from "@/three/fx/fx.type";
+import type {FXPlayer, StarEffect} from "@/three/fx/fx.type";
 import {Mesh} from "three";
 
 type Phases = 'idle' | 'enter' | 'hold' | 'exit';
@@ -10,7 +10,7 @@ interface CTX {
     speed: number,
 }
 
-class StarPlayer {
+export class StarPlayer implements FXPlayer {
     private ctx: CTX;
     private mesh?: Mesh;
     private finished: boolean = false;
@@ -44,9 +44,6 @@ class StarPlayer {
 
         return this.finished;
     }
-
-    //TODO: таймер исправить
-    //TODO: проверку mesh исправить
 
     private stepIdle(mesh: Mesh) {
         if(this.ctx.phase !== 'idle') return;

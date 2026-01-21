@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export type FXStatus = 'queued' | 'playing' | 'done'; //статусы анимации очередь -> проигрывание -> завершено
 
 //это заявка на проигрывание анимации для проигрывателя FSM
@@ -9,7 +11,6 @@ export type FXMeta = {
     createdAt: number,
 };
 
-//TODO: Идея развести FXRequest на констрокцию типа {...StarPayload | ...ShakePayload }  отдельно вынести типы StarPayload = {}
 export type FXRequest = StarEffect | ShakeEffect;
 
 export type StarEffect = {
@@ -26,4 +27,9 @@ export type ShakeEffect = {
         intensity: number,
         durationMs: number,
     }
+}
+//TODO: Вынести в файл для интерфейсов
+export interface FXPlayer {
+    attach(mesh: THREE.Mesh): void,
+    update(dt: number): boolean,
 }

@@ -36,12 +36,12 @@ float noise(vec2 p) {
 }
 
 void main() {
-    vec2 st = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
+    vec2 st = gl_FragCoord.xy / uResolution.xy;
     vec2 p = vUv * 2.0 - 1.0;
 
     float PI = 3.1415926535;
 
-    float d  = (pow(abs(st.x), 0.3) + pow(abs(st.y), 0.3)) * 1.5;
+    float d  = (pow(abs(p.x), 0.3) + pow(abs(p.y), 0.3)) * 0.8;
 
     float r  = length(p);
     float R  = 0.95;
