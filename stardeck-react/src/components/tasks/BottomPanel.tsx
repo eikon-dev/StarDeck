@@ -2,6 +2,7 @@ import TaskList from "./TaskList.tsx";
 import useUiStore from "../../store/useUiStore.ts";
 import {Button} from "@/components/ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
+import ProgressBar from "@/components/tasks/ProgressBar";
 
 export default function BottomPanel() {
     const isOpenPanel = useUiStore(s => s.isOpenPanel);
@@ -43,6 +44,10 @@ export default function BottomPanel() {
                 >
                     Добавить задачу
                 </Button>
+
+                <div className="flex">
+                    <ProgressBar/>
+                </div>
 
                 <div className="mt-2 max-h-[50vh] overflow-y-auto pr-1">
                     <TaskList />
