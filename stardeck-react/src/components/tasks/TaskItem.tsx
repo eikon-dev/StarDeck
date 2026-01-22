@@ -43,11 +43,15 @@ export default function TaskItem({task}: Props) {
                         </AccordionTrigger>
 
                     </div>
-                    <AccordionContent className="flex items-center gap-3">
-                        <p>
-                            {description || "Описание пока пустое"}
-                        </p>
-                        <Button variant="destructive" size="sm" onClick={onDelete}>Удалить</Button>
+                    <AccordionContent className="flex flex-col h-full items-center gap-1">
+                        <div className="min-w-0 flex-1">
+                            <p className="text-sm text-muted-foreground wrap-anywhere whitespace-pre-wrap">
+                                {description || "Описание пока пустое"}
+                            </p>
+                        </div>
+                        <div className="mt-3 flex justify-end">
+                            <Button variant="destructive" size="sm" onClick={onDelete}>Удалить</Button>
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </div>
