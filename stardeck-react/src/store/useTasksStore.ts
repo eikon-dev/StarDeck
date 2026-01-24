@@ -87,7 +87,19 @@ const useTasksStore = create<TaskStore>()(
             },
 
             resetDailyCycle: () => {
+                set((s) => {
+                    //флаг changed = false, чтоб избежать ре рендеров
+                    const changed = s.tasks.some(t => t.cycle === 'daily' && t.done === true);
+                    if (!changed) return s;
 
+                    const nextTasks = s.tasks.map(t => t.cycle === 'daily' && t.done ? {...t, done: false} : t);
+
+                    return (
+                        {
+                            tasks: nextTasks,
+                        }
+                    )
+                })
             },
 
         }),
