@@ -17,7 +17,7 @@ export default function ProgressBar() {
             <Field className="w-full max-w-sm">
                 <FieldLabel htmlFor="progress-upload">
                     <span>Прогресс выполнения</span>
-                    <span className="ml-auto">{doneDaily} / {totalDaily}</span>
+                    <span className="ml-auto">{doneDaily} из {totalDaily}</span>
                 </FieldLabel>
                 <Progress
                     value={progress}
