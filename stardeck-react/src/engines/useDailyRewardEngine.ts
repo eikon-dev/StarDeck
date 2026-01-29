@@ -5,7 +5,7 @@ import selectorDailyStats from "../selectors/selectorDailyStats.ts";
 import useFXStore from "@/store/useFXStore";
 //TODO: Current version v1, wait v2
 //TODO: Внести логические улучшения addReward & createEffectItem можно объединить в одну функцию grantDailyReward() использовать внутри useEffect
-
+//TODO: Баг с появлением награды после resetDailyCycle при первом заходе
 export default function useDailyRewardEngine() {
     const {tasks, lastResetDailyDayKey} = useTasksStore.getState();
     const {addReward, hasDailyReward} = useStarsStore.getState()
@@ -15,7 +15,7 @@ export default function useDailyRewardEngine() {
         const {shouldRewardDaily, dayKey} = selectorDailyStats(tasks);
 
         //guard clauses
-        if (lastResetDailyDayKey !== dayKey) return;
+        if (lastResetDailyDayKey === dayKey) return;
         if (!shouldRewardDaily) return;
         if (hasDailyReward(dayKey)) return;
 
