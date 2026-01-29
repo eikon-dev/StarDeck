@@ -15,7 +15,7 @@ export default function useDailyRewardEngine() {
         const {shouldRewardDaily, dayKey} = selectorDailyStats(tasks);
 
         //guard clauses
-        if (lastResetDailyDayKey === dayKey) return;
+        if (lastResetDailyDayKey !== dayKey) return;
         if (!shouldRewardDaily) return;
         if (hasDailyReward(dayKey)) return;
 
