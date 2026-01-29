@@ -4,11 +4,12 @@ import type {NewTaskInput, Task} from "@/types/task";
 import useEventStore from "./useEventStore.ts";
 
 //TODO: Current version v1, wait v2
-//TODO: Закрыть технический долг resetDailyCycle()
 //TODO: Добавить версионирование
+//TODO: Добавил сохранения данных в persist lastResetDailyDayKey проверить правильность, и нужна ли миграция
 
 interface TaskStore {
     tasks: Task[],
+    lastResetDailyDayKey: string | null,
     hasHydrated: boolean,
 
     setHasHydrated: () => void,
@@ -36,6 +37,7 @@ const useTasksStore = create<TaskStore>()(
         (set, get) => ({
 
             tasks: [],
+            lastResetDailyDayKey: null,
             hasHydrated: false,
 
             setHasHydrated: () => set({hasHydrated: true}),
@@ -46,6 +48,8 @@ const useTasksStore = create<TaskStore>()(
                     title: taskInput.title,
                     description: taskInput.description ?? null,
                     done: false,
+                    holoActive: false,
+                    holoPlayed: false,
                     createdAt: Date.now(),
                     priority: taskInput.priority,
                     cycle: taskInput.cycle,
@@ -92,7 +96,11 @@ const useTasksStore = create<TaskStore>()(
                     const changed = s.tasks.some(t => t.cycle === 'daily' && t.done === true);
                     if (!changed) return s;
 
-                    const nextTasks = s.tasks.map(t => t.cycle === 'daily' && t.done ? {...t, done: false} : t);
+                    const nextTasks = s.tasks.map(t =>
+                        t.cycle === 'daily'
+                        && t.done
+                            ? {...t, done: false}
+                            : t);
 
                     return (
                         {
@@ -106,7 +114,8 @@ const useTasksStore = create<TaskStore>()(
         {
             name: "tasks-store",
             partialize: (state) => ({
-                tasks: state.tasks
+                tasks: state.tasks,
+                lastResetDailyDayKey: state.lastResetDailyDayKey,
             }),
             onRehydrateStorage: () => (state, error) => {
                 if (error) {
