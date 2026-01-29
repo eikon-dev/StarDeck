@@ -7,7 +7,7 @@ import useFXStore from "@/store/useFXStore";
 //TODO: Внести логические улучшения addReward & createEffectItem можно объединить в одну функцию grantDailyReward() использовать внутри useEffect
 
 export default function useDailyRewardEngine() {
-    const tasks = useTasksStore(s => s.tasks);
+    const {tasks, lastResetDailyDayKey} = useTasksStore.getState();
     const {addReward, hasDailyReward} = useStarsStore.getState()
     const {createEffectItem} = useFXStore.getState();
 
@@ -15,6 +15,7 @@ export default function useDailyRewardEngine() {
         const {shouldRewardDaily, dayKey} = selectorDailyStats(tasks);
 
         //guard clauses
+        if (lastResetDailyDayKey !== dayKey) return;
         if (!shouldRewardDaily) return;
         if (hasDailyReward(dayKey)) return;
 
