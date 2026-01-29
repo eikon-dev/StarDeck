@@ -16,11 +16,11 @@ export default function selectorTasksSort(tasks: Task[]): TasksSort {
             (t.cycle === 'daily' ? daily : long).push(t);
         }
 
-        const sort = (a: Task, b: Task) =>
-            Number(a.done) - Number(b.done) || b.createdAt - a.createdAt;
-
-        daily.sort(sort);
-        long.sort(sort);
+        // const sort = (a: Task, b: Task) =>
+        //     Number(a.done) - Number(b.done) || b.createdAt - a.createdAt;
+        //
+        // daily.sort(sort);
+        // long.sort(sort);
 
         return {daily, long};
     }, [tasks])
