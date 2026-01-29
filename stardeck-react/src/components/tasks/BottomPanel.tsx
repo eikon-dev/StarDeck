@@ -15,7 +15,7 @@ export default function BottomPanel() {
             className={cn(
                 "fixed inset-x-0 bottom-0 z-30",
                 "max-w-3xl mx-auto",              // прибили к низу
-                "h-[70vh] rounded-t-3xl",                  // скругление сверху
+                "h-[76vh] rounded-t-3xl",                  // скругление сверху
                 "border border-t border-white/10",             // тонкая рамка
                 "bg-bg-panel/95 backdrop-blur-sm",            // тёмный фон + blur
                 "shadow-[0_-24px_60px_rgba(0,0,0,0.8)]",       // тень сверху
@@ -30,7 +30,7 @@ export default function BottomPanel() {
             >
                 {/* пусто, это просто полоска */}
             </button>
-            <div className="px-4 pb-6 pt-1 flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
                 <div className="flex flex-col items-center ">
                     <h2 className="text-xs uppercase tracking-[0.25em] text-white/60">
                         Ежедневные · Долговременные
@@ -40,16 +40,16 @@ export default function BottomPanel() {
 
                 <Button
                     onClick={openTaskForm}
-                    className="self-stretch text-xs uppercase tracking-[0.18em]"
+                    className="m-4 p-2 self-stretch text-xs uppercase tracking-[0.18em]"
                 >
                     Добавить задачу
                 </Button>
 
-                <div className="flex">
+                <div className="pl-4 max-w-1/2">
                     <ProgressBar/>
                 </div>
 
-                <div className="mt-2 max-h-[50vh] overflow-y-auto pr-1">
+                <div className="p-4 max-h-[50vh] overflow-y-auto">
                     <TaskList />
                 </div>
             </div>
