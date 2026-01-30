@@ -190,3 +190,35 @@
         font-family: "Michroma", system-ui, sans-serif;
     }
 }
+
+/*.stardeck-holo::before{*/
+/*    content:"";*/
+/*    position:absolute;*/
+/*    inset:-40%;*/
+/*    background: linear-gradient(*/
+/*            135deg,*/
+/*            rgba(94,234,212,0.25),*/
+/*            rgba(167,139,250,0.22),*/
+/*            rgba(244,114,182,0.18),*/
+/*            rgba(251,191,36,0.14)*/
+/*    );*/
+/*    filter: blur(18px);*/
+/*    opacity: 0.9;*/
+/*    transform: translate3d(-8%, -6%, 0) rotate(8deg);*/
+/*    animation: stardeckHoloDrift 4.5s ease-in-out both;*/
+/*    pointer-events:none;*/
+/*}*/
+
+/*@keyframes stardeckHoloDrift{*/
+/*    0%   { opacity: 0; transform: translate3d(-12%,-8%,0) rotate(6deg); }*/
+/*    12%  { opacity: 1; }*/
+/*    70%  { opacity: 0.9; transform: translate3d(10%, 6%,0) rotate(10deg); }*/
+/*    100% { opacity: 0; transform: translate3d(18%,10%,0) rotate(12deg); }*/
+/*}*/
+
+/*@media (prefers-reduced-motion: reduce){*/
+/*    .stardeck-holo::before{*/
+/*        animation: none;*/
+/*        opacity: 0.25;*/
+/*    }*/
+/*}*/

@@ -48,10 +48,10 @@ void main() {
     float aa = fwidth(r);
     float clip = 1.0 - smoothstep(R, R + aa, r);
 
-    float t = 0.3;
+    float t = 0.3; // зачем это?
 
 
-    vec3  base  = vec3(0.58, 0.34, 1.0);
+    vec3  base  = vec3(0.82, 0.39, 1.0); //основной цвет
     vec2 warp   = vec2(
         noise(st * 2.0 + vec2(10.0, 0.0) + uTime * 0.05),
         noise(st * 2.0 + vec2(0.0, 10.0) - uTime * 0.05)
