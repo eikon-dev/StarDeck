@@ -7,6 +7,8 @@ export type Task = {
   title: string;
   description: Description;
   done: boolean;
+  holoActive: boolean;
+  holoPlayed: boolean;
   createdAt: number;
   priority: Priority;
   cycle: TaskCycle;
