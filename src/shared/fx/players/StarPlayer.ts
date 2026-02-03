@@ -1,4 +1,4 @@
-import type {FXPlayer, StarEffect} from "@/three/fx/fx.type";
+import type {FXPlayer, StarEffect} from "@/entities/fx/model/fx.type";
 import {Mesh} from "three";
 
 type Phases = 'idle' | 'enter' | 'hold' | 'exit';
