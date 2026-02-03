@@ -1,6 +1,6 @@
-import {FXRunner} from "@/three/fx/FXRunner";
+import {FXRunner} from "@/processes/fx-runner/model/FXRunner";
 import useFXStore from "@/store/useFXStore";
-import type {FXPort} from "@/three/fx/fx.port";
+import type {FXPort} from "@/processes/fx-runner/model/fx.port";
 import type {FXScenePort} from "@/three/fx/FXScene.port";
 import {useMemo, useRef} from "react";
 import * as THREE from "three";

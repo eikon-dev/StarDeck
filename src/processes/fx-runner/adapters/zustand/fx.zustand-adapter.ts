@@ -1,4 +1,4 @@
-import type {FXPort} from "@/three/fx/fx.port";
+import type {FXPort} from "@/processes/fx-runner/model/fx.port";
 import type {EffectItem} from "@/three/fx/fx.type";
 import useFXStore from "@/store/useFXStore";
 
