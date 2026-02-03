@@ -1,6 +1,7 @@
-import * as THREE from "three";
+import type {FXRequest} from "@/shared/fx/model/types";
 
-export type FXStatus = 'queued' | 'playing' | 'done'; //статусы анимации очередь -> проигрывание -> завершено
+//статусы анимации очередь -> проигрывание -> завершено
+export type FXStatus = 'queued' | 'playing' | 'done';
 
 //это заявка на проигрывание анимации для проигрывателя FSM
 export type EffectItem = FXMeta & FXRequest;
@@ -10,10 +11,3 @@ export type FXMeta = {
     status: FXStatus,
     createdAt: number,
 };
-
-
-//TODO: Вынести в файл для интерфейсов
-export interface FXPlayer {
-    attach(mesh: THREE.Mesh): void,
-    update(dt: number): boolean,
-}

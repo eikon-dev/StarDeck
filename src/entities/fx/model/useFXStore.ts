@@ -1,5 +1,6 @@
 import {create} from "zustand";
-import type {EffectItem, FXRequest} from "@/three/fx/fx.type";
+import type {EffectItem} from "@/entities/fx/model/fx.type";
+import type {FXRequest} from "@/shared/fx/model/types";
 
 interface FXStore {
     queue: EffectItem[], //Сюда записываем очередь для воспроизведения

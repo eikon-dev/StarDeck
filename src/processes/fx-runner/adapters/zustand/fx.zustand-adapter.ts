@@ -1,6 +1,6 @@
 import type {FXPort} from "@/processes/fx-runner/model/fx.port";
-import type {EffectItem} from "@/three/fx/fx.type";
-import useFXStore from "@/store/useFXStore";
+import type {EffectItem} from "@/entities/fx/model/fx.type";
+import useFXStore from "@/entities/fx/model/useFXStore";
 
 
 //Plain Object
