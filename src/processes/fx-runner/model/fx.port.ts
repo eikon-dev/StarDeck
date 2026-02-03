@@ -1,4 +1,4 @@
-import type {EffectItem} from "@/three/fx/fx.type";
+import type {EffectItem} from "@/entities/fx/model/fx.type";
 
 export interface FXPort {
     getQueue: () => EffectItem[];

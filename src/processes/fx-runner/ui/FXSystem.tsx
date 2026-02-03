@@ -1,45 +1,32 @@
-import {FXRunner} from "@/processes/fx-runner/model/FXRunner";
-import useFXStore from "@/store/useFXStore";
-import type {FXPort} from "@/processes/fx-runner/model/fx.port";
-import type {FXScenePort} from "@/three/fx/FXScene.port";
-import {useMemo, useRef} from "react";
-import * as THREE from "three";
 import * as React from "react";
+import type { Mesh } from "three"
+
+import {useRef} from "react";
 import {useFrame} from "@react-three/fiber";
 
+import {FXRunner} from "@/processes/fx-runner/model/FXRunner";
+
+import type {FXPort} from "@/processes/fx-runner/model/fx.port";
+import type {FXScenePort} from "@/processes/fx-runner/model/FXScene.port";
+
+import FXZustandAdapter from "@/processes/fx-runner/adapters/zustand/fx.zustand-adapter";
+import fxSceneR3fAdapter from "@/processes/fx-runner/adapters/r3f/fx-scene.r3f-adapter";
+
 type Props = {
-    starMeshRef: React.RefObject<THREE.Mesh | null>,
+    starMeshRef: React.RefObject<Mesh | null>,
 };
 
 const FXSystem = ({starMeshRef}: Props) => {
 
     const runnerRef = useRef<FXRunner | null>(null);
 
-    const fxPort: FXPort = useMemo(() => {
-        return {
-            getQueue() {
-                return useFXStore.getState().queue
-            },
-            start(id) {
-                useFXStore.getState().start(id)
-            },
-            finish(id) {
-                useFXStore.getState().finish(id)
-            },
-        }
-    }, []);
-
-    const fxScenePort: FXScenePort = useMemo(() => {
-        return {
-            getStarMesh: () => starMeshRef.current,
-        }
-    }, []);
+    const fxPort: FXPort = FXZustandAdapter;
+    const fxScenePort: FXScenePort = fxSceneR3fAdapter(starMeshRef);
 
     if (!runnerRef.current) runnerRef.current = new FXRunner(fxPort, fxScenePort);
 
     useFrame((_, dt) => {
         runnerRef.current?.tick(dt);
-
     });
 
     return null;

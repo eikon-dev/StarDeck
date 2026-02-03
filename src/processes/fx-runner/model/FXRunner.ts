@@ -1,7 +1,9 @@
-import type {EffectItem, FXPlayer} from "@/three/fx/fx.type";
-import type {FXPort} from "@/three/fx/fx.port";
-import {StarPlayer} from "@/three/fx/players/StarPlayer";
-import type {FXScenePort} from "@/three/fx/FXScene.port";
+import {StarPlayer} from "@/shared/fx/players/StarPlayer";
+
+import type {FXScenePort} from "@/processes/fx-runner/model/FXScene.port";
+import type {FXPort} from "@/processes/fx-runner/model/fx.port";
+import type {EffectItem} from "@/entities/fx/model/fx.type";
+import type {FXPlayer} from "@/shared/fx/players/types";
 
 export class FXRunner {
     private fxPort: FXPort;
