@@ -1,7 +1,6 @@
 import {create} from 'zustand';
 import {persist} from "zustand/middleware";
-import type {NewTaskInput, Task} from "@/types/task";
-import useEventStore from "./useEventStore.ts";
+import type {NewTaskInput, Task, TaskToggleResult} from "@/entities/task/model/types";
 
 //TODO: Current version v1, wait v2
 //TODO: Добавить версионирование
@@ -16,13 +15,13 @@ interface TaskStore {
 
     addTask: (input: NewTaskInput) => void,
     removeTask: (id: string) => void,
-    toggleTask: (id: string) => void,
+    toggleTask: (id: string) =>  TaskToggleResult | null,
     resetDailyCycle: () => void,
 }
 
 // будущее расширение store
 // interface TaskStore {
-//     tasks: Task[]
+//     tasks: Types[]
 //     dailyFrozen: boolean
 //     lastRewardDate: number | null
 //     addTask: (input: NewTaskInput) => void
@@ -32,7 +31,7 @@ interface TaskStore {
 //     checkDailyCompletion: () => void
 // }
 
-const useTasksStore = create<TaskStore>()(
+export const useTasksStore = create<TaskStore>()(
     persist(
         (set, get) => ({
 
@@ -65,29 +64,26 @@ const useTasksStore = create<TaskStore>()(
                     tasks: s.tasks.filter(t => t.id !== id)
                 }))
             },
-
-            toggleTask: (id: string) => {
+            //TODO:COMPLETED Исправляем стор не знает о EventStore
+            toggleTask: (id: string): TaskToggleResult | null => {
                 const task = get().tasks.find(t => t.id === id);
-                if (!task) return; // чтоб TS не ругался TaskItem всегда передает task.id
+                if (!task) return null; // чтоб TS не ругался TaskItem всегда передает task.id
 
-                const {done: prevDone, cycle} = task; //де структуризация лаконично и красиво
-
-                set(s => ({
-                    tasks: s.tasks.map(t => (t.id === id ? {...t, done: !t.done} : t))
-                }))
-
-                // if (prevDone === undefined) return;
-                // ненужен потому что TaskItem Всегда передает id задачи
-                //     function handleToggle() {
-                //         onToggle(task.id)
-                //     }
-
+                const {done: prevDone, cycle} = task;
                 const nextDone = !prevDone;
 
-                if (nextDone !== prevDone) {
-                    useEventStore.getState().emitTaskToggled(id, nextDone, cycle)
-                }
+                set(s => ({
+                    tasks: s.tasks.map(t =>
+                        t.id === id ? {...t, done: nextDone} : t
+                    ),
+                }))
 
+                return {
+                    taskId: id,
+                    prevDone,
+                    nextDone,
+                    cycle,
+                };
             },
 
             resetDailyCycle: () => {
@@ -127,5 +123,3 @@ const useTasksStore = create<TaskStore>()(
             },
         })
 )
-
-export default useTasksStore;
