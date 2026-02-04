@@ -21,3 +21,10 @@ export type NewTaskInput = {
     priority: Priority,
     cycle: TaskCycle,
 }
+
+export type TaskToggleResult = {
+    taskId: string,
+    prevDone: boolean,
+    nextDone: boolean,
+    cycle: TaskCycle,
+}
