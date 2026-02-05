@@ -1,20 +1,14 @@
 import {create} from "zustand";
-import type {TaskCycle} from "@/types/task";
+import type {TaskCycle} from "@/entities/task/model/types";
+import type { TaskEvent } from "./types";
 
 interface EventStore {
     events: TaskEvent[],
     emitTaskToggled: (id: string, done: boolean, cycle: TaskCycle) => void,
 }
-
-type TaskEvent = {
-    id: string,
-    done: boolean,
-    cycle: TaskCycle,
-    timestamp: number,
-    type: 'task-toggled',
-}
-
-const useEventStore = create<EventStore>((set) => ({
+//TODO: Подумать о направление развития стора аналитики, истории, или это станет task-event
+//TODO: persist (когда понадобится), лимит/очистка (например последние N)
+export const useEventStore = create<EventStore>((set) => ({
     events: [],
 
     emitTaskToggled: (id, done, cycle) => {
@@ -33,5 +27,3 @@ const useEventStore = create<EventStore>((set) => ({
 
 
 }))
-
-export default useEventStore;
