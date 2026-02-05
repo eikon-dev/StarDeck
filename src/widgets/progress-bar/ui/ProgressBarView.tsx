@@ -1,17 +1,15 @@
-import { Field, FieldLabel } from "@/components/ui/field"
-import { Progress } from "@/components/ui/progress"
-import selectorDailyStats from "@/selectors/selectorDailyStats";
-import useTasksStore from "@/store/useTasksStore";
+import { Field, FieldLabel } from "@/shared/ui/field"
+import { Progress } from "@/shared/ui/progress"
 
-export default function ProgressBar() {
+type Props = {
+    progress: number,
+    doneDaily: number,
+    totalDaily: number,
+}
+
+export default function ProgressBar({ progress, doneDaily, totalDaily }: Props) {
     //TODO: current version v1 wait v2
     //TODO: Переработать визуальный стиль, расположение, добавить эффекты заполнения прогресса
-
-    const tasks = useTasksStore(s => s.tasks);
-    const { totalDaily, doneDaily } = selectorDailyStats(tasks);
-
-    const progress = totalDaily > 0 ? Math.round((doneDaily / totalDaily) * 100) : 0;
-
     return (
         <div>
             <Field className="w-full max-w-sm">

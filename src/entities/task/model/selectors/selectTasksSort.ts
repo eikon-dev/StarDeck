@@ -1,4 +1,4 @@
-import type {Task} from "../types/task.ts";
+import type {Task} from "@/entities/task";
 import {useMemo} from "react";
 
 interface TasksSort {
@@ -16,7 +16,7 @@ export default function selectorTasksSort(tasks: Task[]): TasksSort {
             (t.cycle === 'daily' ? daily : long).push(t);
         }
 
-        // const sort = (a: Task, b: Task) =>
+        // const sort = (a: Types, b: Types) =>
         //     Number(a.done) - Number(b.done) || b.createdAt - a.createdAt;
         //
         // daily.sort(sort);
