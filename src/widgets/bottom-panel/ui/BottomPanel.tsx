@@ -1,13 +1,13 @@
-import useUiStore from "../../store/useUiStore.ts";
+import useBottomPanelUiStore from "../modal/useBottomPanelUiStore.ts";
 import {Button} from "@/shared/ui/button.tsx";
 import { cn } from "@/shared/lib";
-import ProgressBar from "@/components/tasks/ProgressBar";
 import TaskListContainer from "@/widgets/task-list/ui/TaskListContainer";
+import {ProgressBarContainer} from "@/widgets/progress-bar/ui/ProgressBarContainer";
 
 export default function BottomPanel() {
-    const isOpenPanel = useUiStore(s => s.isOpenPanel);
-    const togglePanel = useUiStore(s => s.togglePanel);
-    const openTaskForm = useUiStore(s => s.openModal);
+    const isOpenPanel = useBottomPanelUiStore(s => s.isOpenPanel);
+    const togglePanel = useBottomPanelUiStore(s => s.togglePanel);
+    const openTaskForm = useBottomPanelUiStore(s => s.openModal);
 
     return (
 
@@ -46,7 +46,7 @@ export default function BottomPanel() {
                 </Button>
 
                 <div className="pl-4 max-w-1/2">
-                    <ProgressBar/>
+                    <ProgressBarContainer/>
                 </div>
 
                 <div className="p-4 max-h-[50vh] overflow-y-auto">

@@ -7,11 +7,12 @@ type Props = {
         daily: Task[],
         long: Task[],
     }
-    toggleTask: (id: string) => void,
-    removeTask: (id: string) => void,
+    onToggleTask: (id: string) => void,
+    onRemoveTask: (id: string) => void,
 }
 
-export default function TaskList({tasks, toggleTask, removeTask}: Props) {
+export default function TaskListView({tasks, onToggleTask, onRemoveTask}: Props) {
+    //TODO: Убрать emptyTasks?
     const {daily, long, emptyTasks} = tasks;
 
     if (emptyTasks) return (
@@ -26,8 +27,8 @@ export default function TaskList({tasks, toggleTask, removeTask}: Props) {
                         t => <TaskItem
                             key={t.id}
                             task={t}
-                            onToggle={toggleTask}
-                            onDelete={removeTask}
+                            onToggle={onToggleTask}
+                            onDelete={onRemoveTask}
                         />)
                 }</div>
             </section>
@@ -37,8 +38,8 @@ export default function TaskList({tasks, toggleTask, removeTask}: Props) {
                         t => <TaskItem
                             key={t.id}
                             task={t}
-                            onToggle={toggleTask}
-                            onDelete={removeTask}
+                            onToggle={onToggleTask}
+                            onDelete={onRemoveTask}
                         />)
                 }</div>
             </section>
