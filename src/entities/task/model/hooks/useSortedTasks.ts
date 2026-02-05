@@ -1,10 +1,9 @@
-import { useTasksStore } from '@/entities/task';
-import selectorTasksSort from "../selectors/selectorTasksSort.ts";
+import { useTasksStore, selectTasksSort} from '@/entities/task';
 
-export default function useSortedTasks() {
+export function useSortedTasks() {
     const tasks = useTasksStore(s => s.tasks);
     const emptyTasks = tasks.length === 0;
-    const {daily, long} = selectorTasksSort(tasks);
+    const {daily, long} = selectTasksSort(tasks);
 
     return {
         emptyTasks,

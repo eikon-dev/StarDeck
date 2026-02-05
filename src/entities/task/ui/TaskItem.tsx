@@ -1,9 +1,9 @@
 import { type Task } from '@/entities/task';
 import {Button} from "@/shared/ui/button.tsx";
 import {Checkbox} from "@/shared/ui/checkbox.tsx";
-import {PRIORITY_LABEL} from "@/constants/priorityLabel.ts";
+import {PRIORITY_LABEL} from "@/entities/task/model/priorityLabel.ts";
 import {Badge} from "@/shared/ui/badge.tsx";
-import {cn} from "@/lib/utils.ts";
+import {cn} from "@/shared/lib";
 import {Accordion, AccordionContent, AccordionTrigger} from "@/shared/ui/accordion.tsx";
 import {AccordionItem} from "@/shared/ui/accordion.tsx";
 
@@ -56,7 +56,6 @@ export default function TaskItem({task, onDelete, onToggle}: Props) {
                         <p className="text-sm text-white/55 whitespace-pre-wrap break-words">
                             {description || "Описание пока пустое"}
                         </p>
-
                         <div className="mt-3 flex justify-end">
                             <Button
                                 variant="ghost"

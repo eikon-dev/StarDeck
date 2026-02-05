@@ -1,4 +1,4 @@
-import type {Priority} from "../entities/task/model/types.ts";
+import type {Priority} from "./types.ts";
 
 export const PRIORITY_LABEL: Record<Priority, string> = {
     low: "Низкий",

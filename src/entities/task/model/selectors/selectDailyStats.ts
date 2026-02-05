@@ -1,5 +1,5 @@
 import { type Task } from '@/entities/task';
-import {getDayKey} from "@/shared/lib/";
+import {getDayKey} from "@/shared/lib";
 
 interface DailyStats {
     totalDaily: number;
@@ -7,8 +7,8 @@ interface DailyStats {
     shouldRewardDaily: boolean;
     dayKey: string;
 }
-
-export default function selectorDailyStats(tasks: Task[]): DailyStats {
+//TODO: Решить вопрос с dayKey, это уже не "чистая" функция
+export function selectDailyStats(tasks: Task[]): DailyStats {
     const dailyTasks = tasks.filter(t => t.cycle === 'daily');
     const totalDaily = dailyTasks.length;
     const doneDaily = dailyTasks.filter(t => t.done).length;
