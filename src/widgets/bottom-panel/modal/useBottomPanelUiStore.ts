@@ -13,21 +13,15 @@ const useUiStore = create<UiStore>((set) => ({
     isTaskFormOpen: false,
 
     togglePanel: () => {
-        set(s => ({
-            isOpenPanel: !s.isOpenPanel
-        }))
+        set( s => ({ isOpenPanel: !s.isOpenPanel }))
     },
 
     openModal: () => {
-        set( () => ({
-            isTaskFormOpen: true
-        }))
+        set({ isTaskFormOpen: true })
     },
 
     closeModal: () => {
-        set ( () => ({
-            isTaskFormOpen: false
-        }))
+        set ({ isTaskFormOpen: false })
     },
 }))
 

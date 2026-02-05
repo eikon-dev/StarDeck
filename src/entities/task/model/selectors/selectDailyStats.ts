@@ -1,5 +1,5 @@
-import type {Task} from "../types/task.ts";
-import getDayKey from "../utils/getDayKey.ts";
+import { type Task } from '@/entities/task';
+import {getDayKey} from "@/shared/lib/";
 
 interface DailyStats {
     totalDaily: number;

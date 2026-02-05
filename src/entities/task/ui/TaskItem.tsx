@@ -1,61 +1,21 @@
-import type {Task} from "@/types/task.ts";
-import useTasksStore from "@/store/useTasksStore.ts";
-import {Button} from "@/components/ui/button.tsx";
-import {Checkbox} from "@/components/ui/checkbox.tsx";
+import { type Task } from '@/entities/task';
+import {Button} from "@/shared/ui/button.tsx";
+import {Checkbox} from "@/shared/ui/checkbox.tsx";
 import {PRIORITY_LABEL} from "@/constants/priorityLabel.ts";
-import {Badge} from "@/components/ui/badge.tsx";
+import {Badge} from "@/shared/ui/badge.tsx";
 import {cn} from "@/lib/utils.ts";
-import {Accordion, AccordionContent, AccordionTrigger} from "@/components/ui/accordion.tsx";
-import {AccordionItem} from "@/components/ui/accordion.tsx";
-
+import {Accordion, AccordionContent, AccordionTrigger} from "@/shared/ui/accordion.tsx";
+import {AccordionItem} from "@/shared/ui/accordion.tsx";
 
 type Props = {
     task: Task,
+    onToggle: (id: string) => void,
+    onDelete: (id: string) => void,
 }
 
-export default function TaskItem({task}: Props) {
-
-    const { hasHydrated } = useTasksStore.getState();
-    if (!hasHydrated) return null;
+export default function TaskItem({task, onDelete, onToggle}: Props) {
 
     const {title, done, description, priority} = task;
-
-    const onRemove = useTasksStore(s => s.removeTask);
-    const onToggle = useTasksStore(s => s.toggleTask);
-
-    function onDelete() {
-        onRemove(task.id)
-    }
-
-    function onToggleDone() {
-        onToggle(task.id)
-        // playingHolo();
-    }
-
-    // function playingHolo() {
-    //     if (holoPlayed) return null;
-    //
-    //     useTasksStore.setState(s => ({
-    //             ...s,
-    //             tasks: s.tasks.map(t => t.id === task.id ? {...t, holoActive: true, holoPlayed: true} : t)
-    //     }))
-    //
-    //     if (holoActive) return;
-    //
-    //     window.setTimeout(() => {
-    //         useTasksStore.setState((s) => {
-    //             // если задачи уже нет — ничего не делаем
-    //             if (!s.tasks.some((t) => t.id === task.id)) return s;
-    //
-    //             return {
-    //                 ...s,
-    //                 tasks: s.tasks.map((t) =>
-    //                     t.id === task.id ? { ...t, holoActive: false } : t
-    //                 ),
-    //             };
-    //         });
-    //     }, 4500);
-    // }
 
     return (
         <Accordion className="w-full" type="single" collapsible>
@@ -72,7 +32,7 @@ export default function TaskItem({task}: Props) {
                 )}
             >
                 <div className="flex items-center gap-3 px-3 py-2.5 ">
-                    <Checkbox checked={done} onCheckedChange={onToggleDone} variant={done ? "checked" : "unchecked"} />
+                    <Checkbox checked={done} onCheckedChange={() => onToggle(task.id)} variant={done ? "checked" : "unchecked"} />
 
                     <span className={cn("min-w-0 flex-1 truncate text-sm", done ? "text-white/40 line-through" : "text-white/90 font-medium")}>
                         {title}
@@ -102,7 +62,7 @@ export default function TaskItem({task}: Props) {
                                 variant="ghost"
                                 size="sm"
                                 className="text-red-300/80 hover:text-red-200 hover:bg-red-500/10"
-                                onClick={onDelete}
+                                onClick={() => onDelete(task.id)}
                             >
                                 Удалить
                             </Button>
@@ -113,3 +73,28 @@ export default function TaskItem({task}: Props) {
         </Accordion>
     );
 }
+
+// function playingHolo() {
+//     if (holoPlayed) return null;
+//
+//     useTasksStore.setState(s => ({
+//             ...s,
+//             tasks: s.tasks.map(t => t.id === task.id ? {...t, holoActive: true, holoPlayed: true} : t)
+//     }))
+//
+//     if (holoActive) return;
+//
+//     window.setTimeout(() => {
+//         useTasksStore.setState((s) => {
+//             // если задачи уже нет — ничего не делаем
+//             if (!s.tasks.some((t) => t.id === task.id)) return s;
+//
+//             return {
+//                 ...s,
+//                 tasks: s.tasks.map((t) =>
+//                     t.id === task.id ? { ...t, holoActive: false } : t
+//                 ),
+//             };
+//         });
+//     }, 4500);
+// }

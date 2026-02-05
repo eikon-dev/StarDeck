@@ -1,8 +1,8 @@
-import TaskList from "./TaskList.tsx";
 import useUiStore from "../../store/useUiStore.ts";
-import {Button} from "@/components/ui/button.tsx";
-import { cn } from "@/lib/utils.ts";
+import {Button} from "@/shared/ui/button.tsx";
+import { cn } from "@/shared/lib";
 import ProgressBar from "@/components/tasks/ProgressBar";
+import TaskListContainer from "@/widgets/task-list/ui/TaskListContainer";
 
 export default function BottomPanel() {
     const isOpenPanel = useUiStore(s => s.isOpenPanel);
@@ -14,12 +14,12 @@ export default function BottomPanel() {
         <div
             className={cn(
                 "fixed inset-x-0 bottom-0 z-30",
-                "max-w-3xl mx-auto",              // прибили к низу
-                "h-[76vh] rounded-t-3xl",                  // скругление сверху
-                "border border-t border-white/10",             // тонкая рамка
-                "bg-bg-panel/95 backdrop-blur-sm",            // тёмный фон + blur
-                "shadow-[0_-24px_60px_rgba(0,0,0,0.8)]",       // тень сверху
-                "transition-transform duration-500",           // плавный выезд
+                "max-w-3xl mx-auto",                                // прибили книзу
+                "h-[76vh] rounded-t-3xl",                           // скругление сверху
+                "border border-t border-white/10",                // тонкая рамка
+                "bg-bg-panel/95 backdrop-blur-sm",                  // тёмный фон + blur
+                "shadow-[0_-24px_60px_rgba(0,0,0,0.8)]",            // тень сверху
+                "transition-transform duration-500",                // плавный выезд
                 isOpenPanel ? "translate-y-0" : "translate-y-[96%]" // открыта/закрыта
             )}
         >
@@ -50,10 +50,9 @@ export default function BottomPanel() {
                 </div>
 
                 <div className="p-4 max-h-[50vh] overflow-y-auto">
-                    <TaskList />
+                    <TaskListContainer />
                 </div>
             </div>
         </div>
-
     );
 }

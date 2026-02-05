@@ -1,4 +1,4 @@
-import useTasksStore from "../store/useTasksStore.ts";
+import { useTasksStore } from '@/entities/task';
 import selectorTasksSort from "../selectors/selectorTasksSort.ts";
 
 export default function useSortedTasks() {
