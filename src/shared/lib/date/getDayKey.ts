@@ -1,4 +1,4 @@
-export default function getDayKey(date: Date = new Date()) {
+export function getDayKey(date: Date = new Date()) {
 
     const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1).padStart(2, '0');
