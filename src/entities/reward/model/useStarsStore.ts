@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {StarReward} from "@/types/rewards";
+import type {NewStarsInput, StarReward} from "@/entities/reward/model/types";
 import {persist} from "zustand/middleware";
 
 //TODO: Current version v1, wait v2
@@ -17,21 +17,7 @@ interface StarsStore {
     hasLongReward: (taskId: string) => boolean,
 }
 
-type DailyRewardInput = {
-    amount: number,
-    dayKey: string,
-    kind: 'daily-all',
-}
-
-type LongRewardInput = {
-    amount: number,
-    taskId: string,
-    kind: 'long-complete',
-}
-
-type NewStarsInput = DailyRewardInput | LongRewardInput;
-
-const useStarsStore = create<StarsStore>()(
+export const useStarsStore = create<StarsStore>()(
     persist(
         (set, get) => ({
             stars: [],
@@ -59,7 +45,7 @@ const useStarsStore = create<StarsStore>()(
                     }
                 }
             },
-
+            //Todo: addReward стоит вопрос о вынесении логики из стора
             addReward: (starInput: NewStarsInput) => {
                 const checkDaily = get().hasDailyReward;
                 const checkLong = get().hasLongReward;
@@ -109,5 +95,3 @@ const useStarsStore = create<StarsStore>()(
         }
     )
 )
-
-export default useStarsStore;

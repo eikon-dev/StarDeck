@@ -1,0 +1,1 @@
+export { useStarsStore } from "./model/useStarsStore.ts";
