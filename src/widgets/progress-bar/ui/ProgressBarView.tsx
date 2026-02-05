@@ -7,7 +7,7 @@ type Props = {
     totalDaily: number,
 }
 
-export default function ProgressBar({ progress, doneDaily, totalDaily }: Props) {
+export default function ProgressBarView({ progress, doneDaily, totalDaily }: Props) {
     //TODO: current version v1 wait v2
     //TODO: Переработать визуальный стиль, расположение, добавить эффекты заполнения прогресса
     return (

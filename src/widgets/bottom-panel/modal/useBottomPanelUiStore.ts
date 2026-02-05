@@ -8,7 +8,7 @@ interface UiStore {
     closeModal: () => void;
 }
 
-const useUiStore = create<UiStore>((set) => ({
+const useBottomPanelUiStore = create<UiStore>((set) => ({
     isOpenPanel: false,
     isTaskFormOpen: false,
 
@@ -25,4 +25,4 @@ const useUiStore = create<UiStore>((set) => ({
     },
 }))
 
-export default useUiStore;
+export default useBottomPanelUiStore;
