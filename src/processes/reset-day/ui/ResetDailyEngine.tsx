@@ -1,5 +1,5 @@
-import useTasksStore from "@/store/useTasksStore";
-import getDayKey from "@/utils/getDayKey";
+import { useTasksStore } from '@/entities/task';
+import {getDayKey} from "@/shared/lib";
 import {useEffect} from "react";
 
 export default function ResetDailyEngine () {
