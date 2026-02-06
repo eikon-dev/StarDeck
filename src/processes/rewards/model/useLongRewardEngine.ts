@@ -1,7 +1,8 @@
-import useStarsStore from "../store/useStarsStore.ts";
-import useEventStore from "../store/useEventStore.ts";
+import {useStarsStore} from "@/entities/reward";
+
 import {useEffect} from "react";
-import useFXStore from "@/store/useFXStore";
+import useFXStore from "@/entities/fx/model/useFXStore";
+import {useEventStore} from "@/entities/event";
 //TODO: Current version v1, wait v2
 
 export default function useLongRewardEngine() {
