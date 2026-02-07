@@ -1,1 +1,1 @@
-export { useStarsStore } from "./model/useStarsStore.ts";
+export {useStarsStore} from "./model/useStarsStore.ts";

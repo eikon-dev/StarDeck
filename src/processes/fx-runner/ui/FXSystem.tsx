@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Mesh } from "three"
+import type {Mesh} from "three"
 
 import {useRef} from "react";
 import {useFrame} from "@react-three/fiber";
@@ -13,23 +13,23 @@ import FXZustandAdapter from "@/processes/fx-runner/adapters/zustand/fx.zustand-
 import fxSceneR3fAdapter from "@/processes/fx-runner/adapters/r3f/fx-scene.r3f-adapter";
 
 type Props = {
-    starMeshRef: React.RefObject<Mesh | null>,
+  starMeshRef: React.RefObject<Mesh | null>,
 };
 
 const FXSystem = ({starMeshRef}: Props) => {
 
-    const runnerRef = useRef<FXRunner | null>(null);
+  const runnerRef = useRef<FXRunner | null>(null);
 
-    const fxPort: FXPort = FXZustandAdapter;
-    const fxScenePort: FXScenePort = fxSceneR3fAdapter(starMeshRef);
+  const fxPort: FXPort = FXZustandAdapter;
+  const fxScenePort: FXScenePort = fxSceneR3fAdapter(starMeshRef);
 
-    if (!runnerRef.current) runnerRef.current = new FXRunner(fxPort, fxScenePort);
+  if (!runnerRef.current) runnerRef.current = new FXRunner(fxPort, fxScenePort);
 
-    useFrame((_, dt) => {
-        runnerRef.current?.tick(dt);
-    });
+  useFrame((_, dt) => {
+    runnerRef.current?.tick(dt);
+  });
 
-    return null;
+  return null;
 }
 
 export default FXSystem;

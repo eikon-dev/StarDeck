@@ -5,14 +5,14 @@ import TaskListView from "@/widgets/task-list/ui/TaskListView";
 
 export default function TaskListContainer() {
 
-    const tasks = useSortedTasks();
+  const tasks = useSortedTasks();
 
-    return (
-        <TaskListView
-            tasks={tasks}
-            onToggleTask={toggleTask}
-            onRemoveTask={removeTask}
-        />
-    );
+  return (
+    <TaskListView
+      tasks={tasks}
+      onToggleTask={toggleTask}
+      onRemoveTask={removeTask}
+    />
+  );
 }
 

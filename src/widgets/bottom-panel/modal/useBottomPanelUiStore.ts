@@ -1,28 +1,28 @@
 import {create} from "zustand";
 
 interface UiStore {
-    isOpenPanel: boolean;
-    isTaskFormOpen: boolean;
-    togglePanel: () => void;
-    openModal: () => void;
-    closeModal: () => void;
+  isOpenPanel: boolean;
+  isTaskFormOpen: boolean;
+  togglePanel: () => void;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 const useBottomPanelUiStore = create<UiStore>((set) => ({
-    isOpenPanel: false,
-    isTaskFormOpen: false,
+  isOpenPanel: false,
+  isTaskFormOpen: false,
 
-    togglePanel: () => {
-        set( s => ({ isOpenPanel: !s.isOpenPanel }))
-    },
+  togglePanel: () => {
+    set(s => ({isOpenPanel: !s.isOpenPanel}))
+  },
 
-    openModal: () => {
-        set({ isTaskFormOpen: true })
-    },
+  openModal: () => {
+    set({isTaskFormOpen: true})
+  },
 
-    closeModal: () => {
-        set ({ isTaskFormOpen: false })
-    },
+  closeModal: () => {
+    set({isTaskFormOpen: false})
+  },
 }))
 
 export default useBottomPanelUiStore;
