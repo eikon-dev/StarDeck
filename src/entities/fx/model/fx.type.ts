@@ -7,7 +7,7 @@ export type FXStatus = 'queued' | 'playing' | 'done';
 export type EffectItem = FXMeta & FXRequest;
 
 export type FXMeta = {
-    id: string,
-    status: FXStatus,
-    createdAt: number,
+  id: string,
+  status: FXStatus,
+  createdAt: number,
 };

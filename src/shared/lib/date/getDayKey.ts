@@ -1,8 +1,8 @@
 export function getDayKey(date: Date = new Date()) {
 
-    const year = String(date.getFullYear());
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    //TODO: Точка расширения на UTC
-    return year + month + day;
+  const year = String(date.getFullYear());
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  //TODO: Точка расширения на UTC
+  return year + month + day;
 };

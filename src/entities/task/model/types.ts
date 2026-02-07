@@ -16,15 +16,15 @@ export type Task = {
 };
 
 export type NewTaskInput = {
-    title: string,
-    description?: Description,
-    priority: Priority,
-    cycle: TaskCycle,
+  title: string,
+  description?: Description,
+  priority: Priority,
+  cycle: TaskCycle,
 }
 
 export type TaskToggleResult = {
-    taskId: string,
-    prevDone: boolean,
-    nextDone: boolean,
-    cycle: TaskCycle,
+  taskId: string,
+  prevDone: boolean,
+  nextDone: boolean,
+  cycle: TaskCycle,
 }
