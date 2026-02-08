@@ -1,37 +1,35 @@
-import {useStarsStore} from "@/entities/reward";
-
 import {useEffect} from "react";
-import useFXStore from "@/entities/fx/model/useFXStore";
+import {useFXStore} from "@/entities/fx";
 import {useEventStore} from "@/entities/event";
+import {grantReward} from "@/processes/rewards/model/grantReward";
 //TODO: Current version v1, wait v2
 
 export default function useLongRewardEngine() {
-  const {addReward, hasLongReward} = useStarsStore.getState();
   const {createEffectItem} = useFXStore.getState();
   const lastEvent = useEventStore(s => s.events[s.events.length - 1]); //[s.events.length - 1] последнее событие
 
   useEffect(() => {
     if (!lastEvent) return;
 
-    const {id, type, cycle} = lastEvent;
+    const {id, cycle} = lastEvent;
 
-    if (type === 'task-toggled' && cycle === 'long') {
-      if (!hasLongReward(id)) {
-        addReward({
-          amount: 1,
-          taskId: id,
-          kind: "long-complete",
-        })
+    if (cycle !== 'long') return;
 
-        createEffectItem({
-          type: 'star',
-          payload: {
-            posX: 0,
-            posY: -5,
-          }
-        })
+    const grant = grantReward({
+      kind: "long-complete",
+      taskId: id,
+      amount: 1
+    });
+
+    if(!grant) return;
+
+    createEffectItem({
+      type: 'star',
+      payload: {
+        posX: 0,
+        posY: -5,
       }
-    }
+    })
   }, [lastEvent]);
 }
 
