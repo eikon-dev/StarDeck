@@ -1,7 +1,5 @@
 import type {FXPort} from "@/processes/fx-runner/model/fx.port";
-import type {EffectItem} from "@/entities/fx/model/fx.type";
-import useFXStore from "@/entities/fx/model/useFXStore";
-
+import {useFXStore, type EffectItem} from "@/entities/fx";
 
 //Plain Object
 const FXZustandAdapter: FXPort = {
