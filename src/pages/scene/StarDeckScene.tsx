@@ -1,10 +1,10 @@
 import BottomPanel from "@/widgets/bottom-panel/ui/BottomPanel.tsx";
 import Header from "../../shared/ui/Header.tsx";
 import {Canvas} from "@react-three/fiber";
-import StarShader from "@/shared/three/StarShader.tsx";
+import StarShader from "@/shared/three/StarShader.tsx"; //TODO: Поправить api
 import {useRef} from "react";
 import * as THREE from "three";
-import FXSystem from "@/processes/fx-runner/ui/FXSystem";
+import {FXSystem} from "@/processes/fx-runner";
 
 export default function StarDeckScene() {
   const starMeshRef = useRef<THREE.Mesh | null>(null);
