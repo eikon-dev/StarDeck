@@ -12,7 +12,7 @@ interface StarsStore {
   setHasHydrated: () => void,
 
   createStar: (input: NewStarsInput) => StarReward,
-  addReward: (input: NewStarsInput) => void,
+  addReward: (input: NewStarsInput) => boolean,
   hasDailyReward: (dayKey: string) => boolean,
   hasLongReward: (taskId: string) => boolean,
 }
@@ -45,8 +45,9 @@ export const useStarsStore = create<StarsStore>()(
           }
         }
       },
-      //Todo: addReward стоит вопрос о вынесении логики из стора
+
       addReward: (starInput: NewStarsInput) => {
+        //TODO: можно доработать логику
         const checkDaily = get().hasDailyReward;
         const checkLong = get().hasLongReward;
         const createStar = get().createStar;
@@ -54,20 +55,29 @@ export const useStarsStore = create<StarsStore>()(
         if (starInput.kind === 'daily-all') {
           if (!checkDaily(starInput.dayKey)) {
             const star: StarReward = createStar(starInput)
+
             set(s => ({
               stars: [...s.stars, star]
             }))
+
+            return true;
           }
+        } else {
+
         }
 
         if (starInput.kind === 'long-complete') {
           if (!checkLong(starInput.taskId)) {
             const star: StarReward = createStar(starInput)
+
             set(s => ({
               stars: [...s.stars, star]
             }))
+
+            return true;
           }
         }
+        return false;
       },
 
       hasDailyReward: (dayKey: string) => {
