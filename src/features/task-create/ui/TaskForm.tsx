@@ -1,5 +1,4 @@
 import {z} from "zod";
-import {useTasksStore} from '@/entities/task';
 import {Input} from "@/shared/ui/input.tsx";
 import {
   Select,
@@ -22,6 +21,7 @@ import {
 } from "@/shared/ui/form.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {createTask} from "@/features/task-create/model/createTask";
 
 const formSchema = z.object({
   title: z.string().min(4, {
@@ -33,7 +33,6 @@ const formSchema = z.object({
 })
 
 export function TaskForm({onSuccess}: { onSuccess: () => void }) {
-  const addTask = useTasksStore(s => s.addTask);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,14 +45,8 @@ export function TaskForm({onSuccess}: { onSuccess: () => void }) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const newTaskInput = {
-      title: values.title,
-      description: values.description,
-      priority: values.priority,
-      cycle: values.cycle,
-    }
+    createTask(values);
 
-    addTask(newTaskInput);
     onSuccess();
     form.reset();
   }
@@ -81,7 +74,6 @@ export function TaskForm({onSuccess}: { onSuccess: () => void }) {
           name='description'
           render={({field}) => (
             <FormItem>
-              <FormLabel></FormLabel>
               <FormControl>
                 <Input placeholder='Описание' {...field} />
               </FormControl>
