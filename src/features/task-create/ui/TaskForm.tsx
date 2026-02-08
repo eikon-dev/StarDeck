@@ -32,7 +32,7 @@ const formSchema = z.object({
   cycle: z.enum(['daily', 'long']),
 })
 
-export default function TaskForm({onSuccess}: { onSuccess: () => void }) {
+export function TaskForm({onSuccess}: { onSuccess: () => void }) {
   const addTask = useTasksStore(s => s.addTask);
 
   const form = useForm<z.infer<typeof formSchema>>({

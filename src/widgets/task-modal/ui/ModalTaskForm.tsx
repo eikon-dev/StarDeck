@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/shared/ui/dialog.tsx";
-import TaskForm from "@/components/tasks/TaskForm.tsx";
+import {TaskForm} from "@/features/task-create";
 import useBottomPanelUiStore from "@/widgets/bottom-panel/modal/useBottomPanelUiStore.ts";
 import {Button} from "@/shared/ui/button.tsx";
 
