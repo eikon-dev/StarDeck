@@ -16,7 +16,7 @@ type Props = {
   starMeshRef: React.RefObject<Mesh | null>,
 };
 
-const FXSystem = ({starMeshRef}: Props) => {
+export const FXSystem = ({starMeshRef}: Props) => {
 
   const runnerRef = useRef<FXRunner | null>(null);
 
@@ -31,5 +31,3 @@ const FXSystem = ({starMeshRef}: Props) => {
 
   return null;
 }
-
-export default FXSystem;
