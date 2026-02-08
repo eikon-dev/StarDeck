@@ -1,5 +1,5 @@
 import {useTasksStore} from '@/entities/task';
-import useEventStore from "@/entities/event/model/useEventStore";
+import {useEventStore} from "@/entities/event";
 
 
 export function toggleTask(id: string) {
