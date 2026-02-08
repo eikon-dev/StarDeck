@@ -1,7 +1,7 @@
 import useLongRewardEngine from "../model/useLongRewardEngine.ts";
 import useDailyRewardEngine from "../model/useDailyRewardEngine.ts";
 //reward-pipeline когда наград станет больше
-export default function RewardEngine() {
+export function RewardEngine() {
   useLongRewardEngine();
   useDailyRewardEngine();
 
