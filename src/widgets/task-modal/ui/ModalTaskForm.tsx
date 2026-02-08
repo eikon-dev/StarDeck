@@ -14,6 +14,7 @@ export default function ModalTaskForm() {
   const isOpenModal = useBottomPanelUiStore(s => s.isTaskFormOpen);
   const closeModal = useBottomPanelUiStore(s => s.closeModal);
 
+  //TODO: Тут пахнет проблемой
   function onOpenChange() {
     if (isOpenModal) closeModal();
   }
