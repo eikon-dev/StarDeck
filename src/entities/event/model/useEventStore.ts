@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {TaskCycle} from "@/entities/task/model/types";
+import type {TaskCycle} from "@/entities/task";
 import type {TaskEvent} from "./types";
 
 interface EventStore {

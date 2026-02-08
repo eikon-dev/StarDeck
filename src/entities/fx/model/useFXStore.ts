@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {EffectItem} from "@/entities/fx/model/fx.type";
+import type {EffectItem} from "@/entities/fx";
 import type {FXRequest} from "@/shared/fx/model/types";
 
 interface FXStore {
@@ -12,7 +12,7 @@ interface FXStore {
   finish: (id: string) => void,
 }
 
-const useFXStore = create<FXStore>((set) => ({
+export const useFXStore = create<FXStore>((set) => ({
   queue: [],
   history: [],
 
@@ -50,5 +50,3 @@ const useFXStore = create<FXStore>((set) => ({
   },
 
 }));
-
-export default useFXStore;
