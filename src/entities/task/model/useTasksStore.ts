@@ -14,6 +14,7 @@ interface TaskStore {
   setHasHydrated: () => void,
 
   addTask: (input: NewTaskInput) => void,
+  updateTask: (id: string, input: Partial<Task>) => void,
   removeTask: (id: string) => void,
   toggleTask: (id: string) => TaskToggleResult | null,
   resetDailyCycle: () => void,
@@ -56,6 +57,12 @@ export const useTasksStore = create<TaskStore>()(
 
         set(s => ({
           tasks: [...s.tasks, task]
+        }))
+      },
+
+      updateTask: (id: string, input: Partial<Task>) => {
+        set(s => ({
+          tasks: s.tasks.map(t => t.id === id ? {...t, ...input} : t)
         }))
       },
 
