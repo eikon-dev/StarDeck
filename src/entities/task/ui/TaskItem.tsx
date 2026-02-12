@@ -11,9 +11,10 @@ type Props = {
   task: Task,
   onToggle: (id: string) => void,
   onDelete: (id: string) => void,
+  onEdit: (id: string) => void,
 }
 
-export default function TaskItem({task, onDelete, onToggle}: Props) {
+export default function TaskItem({task, onDelete, onToggle, onEdit}: Props) {
 
   const {title, done, description, priority} = task;
 
@@ -58,6 +59,14 @@ export default function TaskItem({task, onDelete, onToggle}: Props) {
               {description || "Описание пока пустое"}
             </p>
             <div className="mt-3 flex justify-end">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mr-2"
+                onClick={() => onEdit(task.id)}
+              >
+                Редактировать
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"
