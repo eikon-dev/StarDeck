@@ -7,14 +7,21 @@ import {
   DialogTitle
 } from "@/shared/ui/dialog.tsx";
 import {TaskForm} from "@/features/task-create";
-import useBottomPanelUiStore from "@/widgets/bottom-panel/modal/useBottomPanelUiStore.ts";
+import useBottomPanelUiStore from "@/widgets/bottom-panel/model/useBottomPanelUiStore.ts";
 import {Button} from "@/shared/ui/button.tsx";
+
+/*
+* TODO: Сделать рефакторинг
+*  - Можно упростить компонент до features/task-create/ui/ModalTaskForm
+*  - Убрать зависимости от uiStore и прокинуть пропсы
+*  - onOpenChange() исправить
+*  - Перевести на новый Shadcn/february2026
+*/
 
 export default function ModalTaskForm() {
   const isOpenModal = useBottomPanelUiStore(s => s.isTaskFormOpen);
   const closeModal = useBottomPanelUiStore(s => s.closeModal);
 
-  //TODO: Тут пахнет проблемой
   function onOpenChange() {
     if (isOpenModal) closeModal();
   }
