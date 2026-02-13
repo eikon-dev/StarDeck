@@ -4,9 +4,6 @@ import {useFXStore} from "@/entities/fx";
 import {getDayKey} from "@/shared/lib";
 import {grantReward} from "@/processes/rewards/model/grantReward";
 
-
-//TODO: Current version v1, wait v2
-
 export default function useDailyRewardEngine() {
   const tasks = useTasksStore(s => s.tasks);
   const lastResetDailyDayKey = useTasksStore(s => s.lastResetDailyDayKey);

@@ -6,7 +6,6 @@ interface DailyStats {
   shouldRewardDaily: boolean;
 }
 
-//TODO: Решить вопрос с dayKey, это уже не "чистая" функция
 export function selectDailyStats(tasks: Task[]): DailyStats {
   const dailyTasks = tasks.filter(t => t.cycle === 'daily');
   const totalDaily = dailyTasks.length;
