@@ -9,9 +9,10 @@ type Props = {
   }
   onToggleTask: (id: string) => void,
   onRemoveTask: (id: string) => void,
+  onEditTask: (id: string) => void,
 }
 
-export default function TaskListView({tasks, onToggleTask, onRemoveTask}: Props) {
+export default function TaskListView({tasks, onToggleTask, onRemoveTask, onEditTask}: Props) {
   //TODO: Убрать emptyTasks?
   const {daily, long, emptyTasks} = tasks;
 
@@ -29,6 +30,7 @@ export default function TaskListView({tasks, onToggleTask, onRemoveTask}: Props)
               task={t}
               onToggle={onToggleTask}
               onDelete={onRemoveTask}
+              onEdit={onEditTask}
             />)
         }</div>
       </section>
@@ -40,6 +42,7 @@ export default function TaskListView({tasks, onToggleTask, onRemoveTask}: Props)
               task={t}
               onToggle={onToggleTask}
               onDelete={onRemoveTask}
+              onEdit={onEditTask}
             />)
         }</div>
       </section>
