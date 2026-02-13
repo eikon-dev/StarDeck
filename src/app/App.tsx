@@ -1,6 +1,6 @@
 import {RewardEngine} from "@/processes/rewards";
 import StarDeckScene from "@/pages/scene/StarDeckScene.tsx";
-import ModalTaskForm from "@/widgets/task-modal/ui/ModalTaskForm.tsx";
+import ModalTaskForm from "@/widgets/task-model/ui/ModalTaskForm.tsx";
 import {ResetDailyEngine} from "@/processes/reset-day";
 
 export default function App() {
