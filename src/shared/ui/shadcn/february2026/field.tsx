@@ -1,15 +1,9 @@
 import {useMemo} from "react"
 import {cva, type VariantProps} from "class-variance-authority"
 
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/field.tsx
 import { cn } from "@/shared/lib/cn/utils"
 import { Label } from "@/shared/ui/shadcn/february2026/label"
 import { Separator } from "@/shared/ui/shadcn/february2026/separator"
-========
-import {cn} from "@/shared/lib"
-import {Label} from "@/shared/ui/label"
-import {Separator} from "@/shared/ui/separator"
->>>>>>>> origin/main:src/shared/ui/field.tsx
 
 function FieldSet({className, ...props}: React.ComponentProps<"fieldset">) {
   return (

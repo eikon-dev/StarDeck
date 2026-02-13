@@ -1,11 +1,7 @@
 import * as React from "react"
 import { Label as LabelPrimitive } from "radix-ui"
 
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/label.tsx
 import { cn } from "@/shared/lib/cn/utils"
-========
-import {cn} from "@/shared/lib"
->>>>>>>> origin/main:src/shared/ui/label.tsx
 
 function Label({
                  className,

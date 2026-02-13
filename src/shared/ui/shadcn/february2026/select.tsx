@@ -1,15 +1,8 @@
 import * as React from "react"
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/select.tsx
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 
 import { cn } from "@/shared/lib/cn/utils"
-========
-import * as SelectPrimitive from "@radix-ui/react-select"
-import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from "lucide-react"
-
-import {cn} from "@/shared/lib"
->>>>>>>> origin/main:src/shared/ui/select.tsx
 
 function Select({
                   ...props
@@ -56,21 +49,12 @@ function SelectTrigger({
 }
 
 function SelectContent({
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/select.tsx
   className,
   children,
   position = "item-aligned",
   align = "center",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
-========
-                         className,
-                         children,
-                         position = "popper",
-                         align = "center",
-                         ...props
-                       }: React.ComponentProps<typeof SelectPrimitive.Content>) {
->>>>>>>> origin/main:src/shared/ui/select.tsx
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content

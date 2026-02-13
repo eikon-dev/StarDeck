@@ -1,16 +1,10 @@
 import * as React from "react"
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/dialog.tsx
 import { XIcon } from "lucide-react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { cn } from "@/shared/lib/cn/utils"
 import { Button } from "@/shared/ui/shadcn/february2026/button"
-========
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import {XIcon} from "lucide-react"
 
-import {cn} from "@/shared/lib"
->>>>>>>> origin/main:src/shared/ui/dialog.tsx
 
 function Dialog({
                   ...props
@@ -96,7 +90,6 @@ function DialogHeader({className, ...props}: React.ComponentProps<"div">) {
   )
 }
 
-<<<<<<<< HEAD:src/shared/ui/shadcn/february2026/dialog.tsx
 function DialogFooter({
   className,
   showCloseButton = false,
@@ -105,9 +98,6 @@ function DialogFooter({
 }: React.ComponentProps<"div"> & {
   showCloseButton?: boolean
 }) {
-========
-function DialogFooter({className, ...props}: React.ComponentProps<"div">) {
->>>>>>>> origin/main:src/shared/ui/dialog.tsx
   return (
     <div
       data-slot="dialog-footer"
