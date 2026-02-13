@@ -2,7 +2,6 @@ import {useEffect} from "react";
 import {useFXStore} from "@/entities/fx";
 import {useEventStore} from "@/entities/event";
 import {grantReward} from "@/processes/rewards/model/grantReward";
-//TODO: Current version v1, wait v2
 
 export default function useLongRewardEngine() {
   const {createEffectItem} = useFXStore.getState();
