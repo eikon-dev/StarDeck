@@ -1,4 +1,4 @@
-import useBottomPanelUiStore from "../modal/useBottomPanelUiStore.ts";
+import useBottomPanelUiStore from "@/widgets/bottom-panel/model/useBottomPanelUiStore.ts";
 import {Button} from "@/shared/ui/button.tsx";
 import {cn} from "@/shared/lib";
 import TaskListContainer from "@/widgets/task-list/ui/TaskListContainer";
