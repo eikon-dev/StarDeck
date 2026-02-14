@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/shared/ui/select.tsx";
-import {Button} from "@/shared/ui/button.tsx";
 import {
   Form,
   FormControl,
@@ -54,7 +53,7 @@ export function TaskForm({onSuccess}: { onSuccess: () => void }) {
   return (
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form id="create-form" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name='title'
@@ -133,7 +132,6 @@ export function TaskForm({onSuccess}: { onSuccess: () => void }) {
             </FormItem>
           )}>
         </FormField>
-        <Button type='submit'>Создать</Button>
       </form>
     </Form>
 
