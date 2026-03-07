@@ -2,19 +2,26 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
+  DialogDescription, DialogFooter,
   DialogHeader,
   DialogTitle
-} from "@/shared/ui/dialog.tsx";
+} from "@/shared/ui/shadcn/february2026/dialog.tsx";
+import {Button} from "@/shared/ui/shadcn/february2026/button.tsx";
 import {TaskForm} from "@/features/task-create";
-import useBottomPanelUiStore from "@/widgets/bottom-panel/modal/useBottomPanelUiStore.ts";
-import {Button} from "@/shared/ui/button.tsx";
+import useBottomPanelUiStore from "@/widgets/bottom-panel/model/useBottomPanelUiStore.ts";
+
+/*
+* TODO: Сделать рефакторинг
+*  - Можно упростить компонент до features/task-create/ui/ModalTaskForm
+*  - Убрать зависимости от uiStore и прокинуть пропсы
+*  - onOpenChange() исправить
+*  - Перевести на новый Shadcn/february2026
+*/
 
 export default function ModalTaskForm() {
   const isOpenModal = useBottomPanelUiStore(s => s.isTaskFormOpen);
   const closeModal = useBottomPanelUiStore(s => s.closeModal);
 
-  //TODO: Тут пахнет проблемой
   function onOpenChange() {
     if (isOpenModal) closeModal();
   }
@@ -30,10 +37,19 @@ export default function ModalTaskForm() {
             Сделай шаг к звезде
           </DialogDescription>
         </DialogHeader>
+
         <TaskForm onSuccess={closeModal}/>
-        <DialogClose asChild>
-          <Button variant="outline">Cancel</Button>
-        </DialogClose>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Отмена</Button>
+          </DialogClose>
+
+          <Button
+            type='submit'
+            form="create-form"
+          >Создать</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
