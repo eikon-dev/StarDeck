@@ -22,6 +22,7 @@ apps/api/node_modules
 apps/api/coverage
 apps/api/.env
 apps/api/.env.*
+apps/api/generated/prisma
 
 logs
 *.log
