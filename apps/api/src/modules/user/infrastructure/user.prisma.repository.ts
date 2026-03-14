@@ -1,18 +1,14 @@
-import {UserRepository} from "../domain/user.repository";
-import {User} from "../domain/user.entity";
-import {PrismaService} from "../../../shared/database/prisma.service";
+import { UserRepository } from '../domain/user.repository';
+import { User } from '../domain/user.entity';
+import { PrismaService } from 'shared';
 
 export class UserPrismaRepository implements UserRepository {
-
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findByTelegramId(telegramId: string): Promise<User | null> {
-
     const record = await this.prisma.user.findUnique({
-      where: {telegramId},
-    })
+      where: { telegramId },
+    });
 
     if (!record) return null;
 
@@ -22,17 +18,17 @@ export class UserPrismaRepository implements UserRepository {
       record.username,
       record.firstName,
       record.createdAt,
-    )
+    );
   }
 
   async save(user: User): Promise<void> {
     await this.prisma.user.upsert({
       where: {
-        telegramId: user.telegramId
+        telegramId: user.telegramId,
       },
       update: {
         username: user.username,
-        firstName: user.firstName
+        firstName: user.firstName,
       },
       create: {
         id: user.id,
@@ -40,6 +36,6 @@ export class UserPrismaRepository implements UserRepository {
         username: user.username,
         firstName: user.firstName,
       },
-    })
+    });
   }
 }
