@@ -1,11 +1,11 @@
-import { UserRepository } from '../domain/user.repository';
+import { Nullable, PrismaService } from 'shared';
 import { User } from '../domain/user.entity';
-import { PrismaService } from 'shared';
+import { UserRepository } from '../domain/user.repository';
 
 export class UserPrismaRepository implements UserRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  public constructor(private readonly prisma: PrismaService) {}
 
-  async findByTelegramId(telegramId: string): Promise<User | null> {
+  public async findByTelegramId(telegramId: string): Promise<Nullable<User>> {
     const record = await this.prisma.user.findUnique({
       where: { telegramId },
     });
@@ -21,7 +21,7 @@ export class UserPrismaRepository implements UserRepository {
     );
   }
 
-  async save(user: User): Promise<void> {
+  public async save(user: User): Promise<void> {
     await this.prisma.user.upsert({
       where: {
         telegramId: user.telegramId,
