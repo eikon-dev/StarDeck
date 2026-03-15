@@ -13,14 +13,14 @@ import {
   type UserRepository,
   USER_REPOSITORY,
 } from 'modules';
-import { TgAuthNestAdapter } from 'modules/auth/infrastructure/tg-auth.nest-adapter';
-import { AuthNestAdapter } from 'modules/auth/infrastructure/auth.nest-adapter';
+import { TgAuthAdapter } from 'modules/auth/infrastructure/tg-auth.adapter';
+import { AuthAdapter } from 'modules/auth/infrastructure/auth.adapter';
 
 @Controller('tg-auth')
 export class TgAuthController {
   public constructor(
-    private readonly tgAuthService: TgAuthNestAdapter,
-    private readonly authService: AuthNestAdapter,
+    private readonly tgAuthService: TgAuthAdapter,
+    private readonly authService: AuthAdapter,
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepository,
   ) {}

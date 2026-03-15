@@ -4,11 +4,11 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthNestAdapter } from 'modules/auth/infrastructure/auth.nest-adapter';
+import { AuthAdapter } from 'modules/auth/infrastructure/auth.adapter';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly authService: AuthNestAdapter) {}
+  constructor(private readonly authService: AuthAdapter) {}
 
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
