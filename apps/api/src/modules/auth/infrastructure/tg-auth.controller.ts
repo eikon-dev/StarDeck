@@ -1,4 +1,12 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
+import type { Response } from 'express';
 import {
   type TelegramAuthData,
   User,
@@ -18,9 +26,14 @@ export class TgAuthController {
   ) {}
 
   @Post()
-  public async signUser(@Body() data: TelegramAuthData) {
+  public async signUser(
+    @Body() data: TelegramAuthData,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const check = this.tgAuthService.verifyHash(data);
-    if (!check) return;
+    if (!check) {
+      throw new UnauthorizedException();
+    }
 
     const user = await this.userRepository.findByTelegramId(data.id);
 
@@ -43,6 +56,10 @@ export class TgAuthController {
 
     const token = this.authService.createToken(currentUser);
 
-    return { token };
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
   }
 }
