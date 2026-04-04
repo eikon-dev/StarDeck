@@ -1,11 +1,13 @@
+//TODO: Подтянуть изменения, после изменения модели User
 
 export class User {
   constructor(
-    readonly id: string,
-    readonly telegramId: string,
+    readonly uuid: string,
+    readonly telegramId: bigint,
     readonly username: string | null,
     readonly firstName: string,
-    readonly createdAt: Date,
-    //readonly updatedAt: Date,
+    readonly id?: bigint,
+    readonly createdAt?: Date,
+    readonly updatedAt?: Date,
   ) {}
 }
