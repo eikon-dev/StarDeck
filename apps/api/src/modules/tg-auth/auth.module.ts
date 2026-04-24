@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from 'modules/tg-auth/infrastucture/auth.controller';
-import { AuthGuard } from 'modules/tg-auth/infrastucture/auth.guard';
-import { AuthService } from 'modules/tg-auth/infrastucture/auth.service';
+import { AuthController, AuthGuard, AuthService } from 'modules/tg-auth';
 
 import { UserModule } from 'modules/user/user.module';
 import { TgAuthService } from 'modules/tg-auth/domain/tg-auth.service';
