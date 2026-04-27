@@ -17,7 +17,7 @@ export function LoginForm({
     window.Telegram.Login.auth(
       { bot_id: '8609527664', request_access: true },
       async (user) => {
-        const res = await fetch('http://localhost:3001/auth/login', {
+        const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
