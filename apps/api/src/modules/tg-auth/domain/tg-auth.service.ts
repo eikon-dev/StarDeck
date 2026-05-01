@@ -19,7 +19,7 @@ export class TgAuthService {
       .join('\n');
 
     const secretKey = crypto
-      .createHmac('sha256', 'WebAppData')
+      .createHash('sha256')
       .update(this.secretKey)
       .digest();
 

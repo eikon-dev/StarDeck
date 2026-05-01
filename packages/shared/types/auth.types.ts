@@ -1,8 +1,3 @@
-export type AccessPayload = {
-  sub: string;
-  telegramId: string;
-};
-
 export type TelegramAuthData = {
   id: bigint;
   first_name: string;
