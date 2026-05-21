@@ -6,7 +6,6 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - API_URL=http://api:3001
       - DATABASE_URL=${DATABASE_URL}
       - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
       - TG_BOT_SECRET_KEY=${TG_BOT_SECRET_KEY}
@@ -19,5 +18,7 @@ services:
       dockerfile: apps/web/Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - API_URL=http://api:3001
     depends_on:
       - api
