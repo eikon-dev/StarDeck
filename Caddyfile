@@ -1,0 +1,3 @@
+star-deck.ru {
+    reverse_proxy web:3000
+}
