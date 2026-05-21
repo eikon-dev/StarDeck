@@ -1,5 +1,5 @@
 FROM node:22-slim AS base
-RUN npm install -g pnpm
+RUN npm install -g pnpm@10.32.1
 
 FROM base AS build
 WORKDIR /app
