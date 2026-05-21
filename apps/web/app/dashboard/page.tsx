@@ -11,7 +11,7 @@ export default async function Dashboard() {
     redirect('/login');
   }
 
-  const res = await fetch('http://localhost:3001/api/auth/me', {
+  const res = await fetch(`${process.env.API_URL}/auth/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
