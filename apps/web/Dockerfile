@@ -3,6 +3,8 @@ RUN npm install -g pnpm@10.32.1
 
 FROM base AS build
 WORKDIR /app
+ARG API_URL=http://api:3001
+ENV API_URL=$API_URL
 COPY . .
 RUN pnpm install --frozen-lockfile
 RUN pnpm --filter web build
