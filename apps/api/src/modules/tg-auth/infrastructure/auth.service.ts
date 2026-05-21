@@ -21,7 +21,6 @@ export class AuthService {
   ) {}
 
   public async login(authData: TelegramAuthData) {
-    console.log(authData);
     const verify = this.tgAuthService.verifyHash(authData);
     if (!verify) {
       throw new UnauthorizedException();
