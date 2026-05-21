@@ -10,6 +10,9 @@ RUN pnpm --filter api build
 
 FROM base AS production
 WORKDIR /app
-COPY --from=build /app/apps/api/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/apps/api/dist ./apps/api/dist
+COPY . .
+RUN pnpm install --frozen-lockfile --prod
+RUN pnpm --filter api exec prisma generate
+WORKDIR /app/apps/api
 CMD ["node", "dist/src/main"]
