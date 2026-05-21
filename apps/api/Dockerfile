@@ -12,4 +12,4 @@ FROM base AS production
 WORKDIR /app
 COPY --from=build /app/apps/api/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main"]
