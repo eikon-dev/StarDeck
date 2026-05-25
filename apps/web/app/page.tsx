@@ -1,9 +1,13 @@
-import LoginPage from './login';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
+export default async function Home() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token');
+
+  if (!token) {
+    redirect('/login');
+  }
+
+  redirect('/dashboard');
 }
