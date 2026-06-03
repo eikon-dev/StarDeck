@@ -1,40 +1,19 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/glass/button';
 import { Field, FieldDescription, FieldGroup } from '@/components/ui/field';
 
 import Script from 'next/script';
-import { useRouter } from 'next/navigation';
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
-  const router = useRouter();
+type LoginFormProps = {
+  onLogin: () => void;
+  className?: string;
+};
 
-  function handleTelegramLogin() {
-    window.Telegram.Login.auth(
-      { bot_id: '8609527664', request_access: true },
-      async (user) => {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...user,
-          }),
-        });
-        if (res.ok) {
-          router.replace('/dashboard');
-        }
-      },
-    );
-  }
-
+export function LoginForm({ onLogin, className }: LoginFormProps) {
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)}>
       <form id="login-form">
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
@@ -42,7 +21,7 @@ export function LoginForm({
               href="#"
               className="flex flex-col items-center gap-2 font-medium"
             >
-              <div className="flex size-10 items-center justify-center rounded-md">
+              <div className="flex size-10 items-center justify-center rounded-md text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path
                     d="M3.545 1.81A12.428 12.428 0 0 0 0 2.35a10.409 10.409 0 0 1 1.838-.146c5.602.048 10.114 4.543 10.16 10.075-2.263 1.066-4.976 2.147-7.986 3.158-1.258.423-2.956 1.053-3.751 1.482a2.073 2.073 0 0 1-.04.035l.257-.065c1.338-.338 2.714-.703 4.112-1.116a106.969 106.969 0 0 0 7.364-2.455c-.404 4.299-3.506 7.81-7.599 8.872 5.472-.627 9.837-4.8 10.155-9.883 6.236-2.597 9.957-5.18 9.443-6.805-.454-1.435-5.038-1.7-11.657-.554.229.226.492.512.757.826 3.3-.31 5.532-.007 5.83.934.335 1.06-1.348 2.612-4.382 4.296-.395-5.198-5.1-9.236-10.956-9.194z"
@@ -52,12 +31,18 @@ export function LoginForm({
               </div>
               <span className="sr-only">StarDeck.</span>
             </a>
-            <h1 className="text-xl font-bold">Добро пожаловать в StarDeck.</h1>
+            <h1
+              className="text-xl font-bold text-white"
+              style={{ textShadow: '0 0 20px rgba(0,0,0,0.8)' }}
+            >
+              Добро пожаловать в StarDeck.
+            </h1>
           </div>
           <Field className="align-middle">
             <Button
-              onClick={handleTelegramLogin}
-              variant="outline"
+              className="text-white rounded-full"
+              glass={{ color: 'rgba(255, 255, 255, 0.1)', blur: 20 }}
+              onClick={onLogin}
               type="button"
               form="login-form"
             >
@@ -72,7 +57,10 @@ export function LoginForm({
           </Field>
         </FieldGroup>
       </form>
-      <FieldDescription className="px-6 text-center">
+      <FieldDescription
+        className="px-6 text-center text-white"
+        style={{ textShadow: '0 0 20px rgba(0,0,0,0.8)' }}
+      >
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
