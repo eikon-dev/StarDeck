@@ -1,8 +1,12 @@
 'use client';
 
 import { cn } from '@/shared/lib/utils';
-import { Button } from '@/components/ui/glass/button';
-import { Field, FieldDescription, FieldGroup } from '@/components/ui/field';
+import { Button } from '@/shared/ui/components/glass/button';
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+} from '@/shared/ui/components/field';
 
 import Script from 'next/script';
 

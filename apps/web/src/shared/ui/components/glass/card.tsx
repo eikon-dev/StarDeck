@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/shared/ui/components/card';
 import { cn } from '@/shared/lib/utils';
 import type { GlassCustomization } from '@/shared/lib/glass-utils';
 import { hoverEffects, type HoverEffect } from '@/shared/lib/hover-effects';

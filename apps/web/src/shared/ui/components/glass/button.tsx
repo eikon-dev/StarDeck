@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button as BaseButton } from '@/components/ui/button';
+import { Button as BaseButton } from '@/shared/ui/components/button';
 import { cn } from '@/shared/lib/utils';
 import type { GlassCustomization } from '@/shared/lib/glass-utils';
 import { hoverEffects, type HoverEffect } from '@/shared/lib/hover-effects';

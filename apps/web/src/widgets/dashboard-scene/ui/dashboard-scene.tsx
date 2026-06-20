@@ -1,6 +1,6 @@
 'use client';
 
-import Synthesis from '@/components/synthesis';
+import Synthesis from '@/shared/ui/synthesis';
 import DrawerTaskPanel from '@/widgets/task-panel/ui/drawer-task-panel';
 import { motion } from 'framer-motion';
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { LoginForm } from '@/components/login-form';
-import { LightSpeed } from '@/components/light-speed';
+import { LoginForm } from '@/shared/ui/login-form';
+import { LightSpeed } from '@/shared/ui/light-speed';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { animate, motion, useMotionValue } from 'framer-motion';
