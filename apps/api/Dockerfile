@@ -24,5 +24,6 @@ COPY packages/shared/package.json ./packages/shared/
 RUN pnpm install --frozen-lockfile --prod
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/apps/api/prisma ./apps/api/prisma
+RUN pnpm --filter api exec prisma generate
 WORKDIR /app/apps/api
 CMD ["node", "dist/src/main"]
