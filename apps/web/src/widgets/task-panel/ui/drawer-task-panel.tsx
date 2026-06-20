@@ -57,7 +57,12 @@ export default function DrawerTaskPanel() {
               </svg>
             </motion.div>
 
-            <TaskPanel />
+            <div
+              data-vaul-no-drag
+              className="flex flex-col items-center w-full h-full"
+            >
+              <TaskPanel />
+            </div>
           </div>
         </Drawer.Content>
       </Drawer.Portal>
