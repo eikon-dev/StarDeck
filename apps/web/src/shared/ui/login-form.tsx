@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { Button } from '@/components/ui/glass/button';
 import { Field, FieldDescription, FieldGroup } from '@/components/ui/field';
 

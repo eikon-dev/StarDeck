@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
-import type { GlassCustomization } from '@/lib/glass-utils';
-import { hoverEffects, type HoverEffect } from '@/lib/hover-effects';
+import { cn } from '@/shared/lib/utils';
+import type { GlassCustomization } from '@/shared/lib/glass-utils';
+import { hoverEffects, type HoverEffect } from '@/shared/lib/hover-effects';
 
 export interface CardProps extends React.ComponentProps<typeof BaseCard> {
   gradient?: boolean;

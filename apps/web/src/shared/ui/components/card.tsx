@@ -1,7 +1,10 @@
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
-import { getGlassStyles, type GlassCustomization } from '@/lib/glass-utils';
+import { cn } from '@/shared/lib/utils';
+import {
+  getGlassStyles,
+  type GlassCustomization,
+} from '@/shared/lib/glass-utils';
 
 function Card({
   className,

@@ -5,12 +5,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/components/ui/glass/card';
+} from '@/shared/ui/components/glass/card';
 import {
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
-} from '@/components/ui/glass/collapsible';
+} from '@/shared/ui/components/glass/collapsible';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 

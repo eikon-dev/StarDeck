@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useMemo, useRef, useEffect } from "react";
-import * as THREE from "three";
-import { cn } from "@/lib/utils";
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useMemo, useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { cn } from '@/shared/lib/utils';
 
 const vertexShader = `
   varying vec2 vUv;
@@ -94,7 +94,7 @@ const Effect = ({
   glowIntensity,
   flowFrequency,
   contrast,
-}: Required<Omit<SynthesisProps, "className" | "backgroundColor">>) => {
+}: Required<Omit<SynthesisProps, 'className' | 'backgroundColor'>>) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const uniforms = useMemo(
@@ -111,7 +111,7 @@ const Effect = ({
       uFlowFrequency: { value: flowFrequency },
       uContrast: { value: contrast },
     }),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -144,7 +144,7 @@ const Effect = ({
         state.clock.getElapsedTime() * speed;
       materialRef.current.uniforms.uResolution.value.set(
         state.size.width,
-        state.size.height
+        state.size.height,
       );
     }
   });
@@ -165,29 +165,29 @@ const Effect = ({
 export default function Synthesis({
   className,
   speed = 0.4,
-  color1 = "#0f172a",
-  color2 = "#3b0764",
-  color3 = "#0ea5e9",
+  color1 = '#0f172a',
+  color2 = '#3b0764',
+  color3 = '#0ea5e9',
   scale = 1.0,
   complexity = 6.0,
   distortion = 0.6,
   glowIntensity = 0.4,
   flowFrequency = 3.0,
   contrast = 1.2,
-  backgroundColor = "#000000",
+  backgroundColor = '#000000',
 }: SynthesisProps) {
   return (
     <div
       className={cn(
-        "absolute inset-0 w-full h-full pointer-events-none overflow-hidden",
-        className
+        'absolute inset-0 w-full h-full pointer-events-none overflow-hidden',
+        className,
       )}
       style={{ backgroundColor }}
     >
       <Canvas
         camera={{ position: [0, 0, 1] }}
         dpr={1}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
       >
         <Effect
           speed={speed}

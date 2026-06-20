@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { cn } from "@/lib/utils";
+import React, { useRef, useMemo } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { cn } from '@/shared/lib/utils';
 
 export interface LightSpeedProps {
   /**
@@ -72,7 +72,7 @@ function Particles({
       let z = (Math.random() - 0.5) * cylinderLength;
       let speedMultiplier = 0.5 + Math.random() * 0.5;
 
-      // Pre-warm the particle simulation by 1.5 seconds 
+      // Pre-warm the particle simulation by 1.5 seconds
       for (let j = 0; j < 90; j++) {
         z += baseSpeed * speedMultiplier * (1 / 60) * 50;
         if (z > 5) {
@@ -122,7 +122,8 @@ function Particles({
       dummy.position.set(particle.x, particle.y, particle.z);
       // We scale the length on the Z-axis to mimic motion blur/stretched UV spheres
       // The faster it moves, the more stretched it appears
-      const stretchZ = particle.length + (baseSpeed * particle.speedMultiplier * 0.5);
+      const stretchZ =
+        particle.length + baseSpeed * particle.speedMultiplier * 0.5;
       // X and Y are scaled small to look thin (like streaks)
       dummy.scale.set(0.04, 0.04, stretchZ);
 
@@ -154,7 +155,7 @@ function Particles({
 export function LightSpeed({
   particleCount = 1000,
   speed = 2.4,
-  lightColor = "#b026ff",
+  lightColor = '#b026ff',
   intensity = 3.0,
   radius = 25,
   cylinderLength = 150,
@@ -163,8 +164,8 @@ export function LightSpeed({
   return (
     <div
       className={cn(
-        "absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-[#05070b]",
-        className
+        'absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-[#05070b]',
+        className,
       )}
     >
       {/* 
@@ -172,10 +173,9 @@ export function LightSpeed({
         It simulates a camera traveling in a cylinder (as per the Ducky3D video). 
       */}
       <Canvas camera={{ position: [0, 0, 5], fov: 90 }} dpr={[1, 2]}>
-
         {/* The fog acts as the "Volume cube" from the tutorial to fade out clipping edges in the distance */}
-        <fogExp2 attach="fog" args={["#000000", 0.025]} />
-        <color attach="background" args={["#000000"]} />
+        <fogExp2 attach="fog" args={['#000000', 0.025]} />
+        <color attach="background" args={['#000000']} />
 
         <Particles
           count={particleCount}
