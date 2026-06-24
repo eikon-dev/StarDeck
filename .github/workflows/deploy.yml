@@ -12,6 +12,8 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -29,6 +31,8 @@ jobs:
           file: ./apps/api/Dockerfile
           push: true
           tags: ghcr.io/eikon-dev/stardeck-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push Web
         uses: docker/build-push-action@v5
@@ -39,6 +43,8 @@ jobs:
           tags: ghcr.io/eikon-dev/stardeck-web:latest
           build-args: |
             NEXT_PUBLIC_BOT_ID=${{ secrets.NEXT_PUBLIC_BOT_ID }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy:
     needs: build-and-push
