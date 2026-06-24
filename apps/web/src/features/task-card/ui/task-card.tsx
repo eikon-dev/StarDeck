@@ -16,7 +16,8 @@ import { ChevronDown } from 'lucide-react';
 
 export default function TaskCard() {
   const [open, setOpen] = useState(false);
-
+  // Комментарий для теста скорости сборки после первого запуска с кешами
+  // Первый запуск 2,55с с кешированием
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card
