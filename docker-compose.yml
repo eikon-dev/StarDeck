@@ -1,8 +1,6 @@
 services:
   api:
-    build:
-      context: .
-      dockerfile: apps/api/Dockerfile
+    image: ghcr.io/eikon-dev/stardeck-api:latest
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
@@ -11,11 +9,7 @@ services:
       - PORT=3001
 
   web:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-      args:
-        - NEXT_PUBLIC_BOT_ID=${NEXT_PUBLIC_BOT_ID}
+    image: ghcr.io/eikon-dev/stardeck-web:latest
     environment:
       - API_URL=http://api:3001
     depends_on:
