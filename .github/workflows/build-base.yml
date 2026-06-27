@@ -1,0 +1,57 @@
+name: Build Base Images
+
+on:
+  push:
+    branches:
+      - feat/next-migration-ui
+    paths:
+      - 'pnpm-lock.yaml'
+      - 'apps/api/package.json'
+      - 'apps/web/package.json'
+      - 'packages/shared/package.json'
+      - 'apps/api/prisma/**'
+      - 'apps/api/Dockerfile.base'
+      - 'apps/web/Dockerfile.base'
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  build-base:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push API base
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/api/Dockerfile.base
+          push: true
+          tags: ghcr.io/eikon-dev/stardeck-api-base:latest
+          cache-from: type=gha,scope=api-base
+          cache-to: type=gha,mode=max,scope=api-base
+
+      - name: Build and push Web base
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/web/Dockerfile.base
+          push: true
+          tags: ghcr.io/eikon-dev/stardeck-web-base:latest
+          cache-from: type=gha,scope=web-base
+          cache-to: type=gha,mode=max,scope=web-base

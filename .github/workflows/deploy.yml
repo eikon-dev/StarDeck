@@ -4,18 +4,30 @@ on:
   push:
     branches:
       - feat/next-migration-ui
+    paths-ignore:
+      - 'apps/api/Dockerfile.base'
+      - 'apps/web/Dockerfile.base'
+      - '.github/workflows/build-base.yml'
+  workflow_run:
+    workflows: ["Build Base Images"]
+    types:
+      - completed
+    branches:
+      - feat/next-migration-ui
 
 jobs:
   build-and-push:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -31,8 +43,8 @@ jobs:
           file: ./apps/api/Dockerfile
           push: true
           tags: ghcr.io/eikon-dev/stardeck-api:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
 
       - name: Build and push Web
         uses: docker/build-push-action@v5
@@ -43,8 +55,8 @@ jobs:
           tags: ghcr.io/eikon-dev/stardeck-web:latest
           build-args: |
             NEXT_PUBLIC_BOT_ID=${{ secrets.NEXT_PUBLIC_BOT_ID }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
 
   deploy:
     needs: build-and-push
@@ -53,7 +65,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy docker-compose.yml to server
+      - name: Copy compose files to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -72,3 +84,16 @@ jobs:
             cd /root/stardeck
             docker compose pull
             docker compose up -d
+
+  cleanup:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup old images on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker image prune -af
