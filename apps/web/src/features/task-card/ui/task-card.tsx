@@ -20,6 +20,7 @@ export default function TaskCard() {
   // Первый запуск 2,55с с кешированием
   // Тест показал API= 1m49s, Web= 39s, deploy= 59s
   // Делаем второй тест после настройки кешев
+  // Новый тест скорости после обновления архитектуры Docker
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card
