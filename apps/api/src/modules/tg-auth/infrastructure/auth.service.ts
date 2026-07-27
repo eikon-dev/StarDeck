@@ -13,7 +13,7 @@ import { Nullable } from 'shared';
 
 @Injectable()
 export class AuthService {
-  constructor(
+  public constructor(
     private readonly tokenService: TokenService,
     private readonly tgAuthService: TgAuthService,
     @Inject(USER_REPOSITORY)

@@ -1,7 +1,5 @@
-//TODO: Подтянуть изменения, после изменения модели User
-
 export class User {
-  constructor(
+  public constructor(
     readonly uuid: string,
     readonly telegramId: bigint,
     readonly username: string | null,

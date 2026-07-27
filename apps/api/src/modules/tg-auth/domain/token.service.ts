@@ -8,7 +8,7 @@ import { ACCESS_TOKEN_TTL } from 'modules/tg-auth/domain/auth.constants';
 export class TokenService {
   private readonly secret: string;
 
-  constructor() {
+  public constructor() {
     this.secret = requireEnv('JWT_ACCESS_SECRET');
   }
 

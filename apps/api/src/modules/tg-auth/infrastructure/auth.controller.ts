@@ -1,18 +1,15 @@
 import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import type { Response } from 'express';
 
-import {
-  type AccessPayload,
-  type TelegramAuthData,
-} from 'modules/tg-auth/domain/auth.types';
+import { type TelegramAuthData } from 'modules/tg-auth/domain/auth.types';
 import { requireEnv } from 'shared/require-env';
 import { ACCESS_TOKEN_TTL } from 'modules/tg-auth/domain/auth.constants';
-
 import { AuthService, AuthGuard, CurrentUser } from 'modules/tg-auth';
+import { User } from 'modules/user';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  public constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   public async login(
@@ -33,8 +30,13 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('me')
-  public async me(@CurrentUser() user: AccessPayload) {
-    return user;
+  public me(@CurrentUser() user: User) {
+    return {
+      uuid: user.uuid,
+      telegramId: user.telegramId.toString(),
+      username: user.username,
+      firstName: user.firstName,
+    };
   }
   public async logout() {}
 }
