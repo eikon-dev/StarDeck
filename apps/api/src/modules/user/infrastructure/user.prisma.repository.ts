@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { User as PrismaUser } from '@prisma/client';
 
 import { Nullable, PrismaService } from 'shared';
 import { User } from 'modules';
@@ -16,6 +17,20 @@ export class UserPrismaRepository implements UserRepository {
 
     if (!record) return null;
 
+    return this.toDomain(record);
+  }
+
+  public async findByUuid(uuid: string): Promise<Nullable<User>> {
+    const record = await this.prisma.user.findUnique({
+      where: { uuid },
+    });
+
+    if (!record) return null;
+
+    return this.toDomain(record);
+  }
+
+  private toDomain(record: PrismaUser): User {
     return new User(
       record.uuid,
       record.telegramId,
