@@ -469,3 +469,12 @@ body {
 [data-sonner-toast] [data-close-button]:hover {
   opacity: 0.9 !important;
 }
+
+.sd-collapsible { overflow: hidden; }
+.sd-collapsible[data-state='open']   { animation: sd-down 220ms cubic-bezier(.32,.72,0,1); }
+.sd-collapsible[data-state='closed'] { animation: sd-up   180ms cubic-bezier(.32,.72,0,1); }
+@keyframes sd-down { from { height: 0 } to { height: var(--radix-collapsible-content-height) } }
+@keyframes sd-up   { from { height: var(--radix-collapsible-content-height) } to { height: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .sd-collapsible[data-state='open'], .sd-collapsible[data-state='closed'] { animation: none }
+}
